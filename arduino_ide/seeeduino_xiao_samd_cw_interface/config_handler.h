@@ -13,7 +13,7 @@ namespace NsConfigurator {
       unsigned long keyPressDuration;
 
   public:
-      void init();
+      void initTimer();
       unsigned long getKeyPressDuration();
   };
   extern Timer myTimer;
@@ -31,7 +31,7 @@ namespace NsConfigurator {
 
   
   public:
-      void init();
+      void initConfig();
       void writeConfig2Memory();
       void readConfigFromMemory();
       int getTypeEvent();

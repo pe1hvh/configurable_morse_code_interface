@@ -53,8 +53,8 @@ void setup() {
   pinMode(inPin6, INPUT_PULLUP);
   pinMode(inPin7, INPUT_PULLUP);
 
-  NsConfigurator::myConfig.init();                      // read configutation values from permanent memory
-  NsConfigurator::myTimer.init();                        // calculated first morse key press
+  NsConfigurator::myConfig.initConfig();                      // read configutation values from permanent memory
+  NsConfigurator::myTimer.initTimer();                        // calculated first morse key press
 
   if (NsConfigurator::myTimer.getKeyPressDuration() > 1000  || NsConfigurator::myConfig.getTypeEvent() > 2 ) {
     

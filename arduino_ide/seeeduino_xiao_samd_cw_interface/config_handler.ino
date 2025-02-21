@@ -7,7 +7,7 @@ namespace NsConfigurator {
     /******************************************/
     /* @brief The initTimer                   */   
     /******************************************/
-    void Timer::init() {
+    void Timer::initTimer() {
          while (digitalRead(inPin6) == HIGH && digitalRead(inPin7)==HIGH) {
             //key is not Press
             delay(25);                // simple method against bouncing
@@ -52,7 +52,7 @@ namespace NsConfigurator {
     /******************************************/
     /* @brief The constructor                 */   
     /******************************************/     
-     void Config::init() {
+     void Config::initConfig() {
          readConfigFromMemory();
      }
      

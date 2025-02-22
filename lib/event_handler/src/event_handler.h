@@ -30,7 +30,7 @@ namespace NsEvent {
         int rightEvent;
     
       public:
-        void initHandler(int tMorseKey, int lEvent, int rEvent) override;
+        void initHandler(int typeMorseKey, int leftEvent, int rightEvent) override;
         void handleMorseKey(int pinDot, int pinDash) override;
     };
     
@@ -44,7 +44,7 @@ namespace NsEvent {
         int rightEvent;
     
       public:
-        void initHandler(int tMorseKey, int lEvent, int rEvent) override;
+        void initHandler(int typeMorseKey, int leftEvent, int rightEvent) override;
         void handleMorseKey(int pinDot, int pinDash) override;
     };
     

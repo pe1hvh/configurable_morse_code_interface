@@ -2,7 +2,7 @@
 #define CONFIG_HANDLER_H_
 
 #include <Arduino.h>
-#include "pin_handler.h"
+
 
 namespace NsConfigurator {
 

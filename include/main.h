@@ -1,7 +1,7 @@
 #ifndef MAIN_H_
 #define MAIN_H_
 
-#include "pin_handler.h"
+#include "global_vars.h"
 #include "connection_handler.h"
 #include "config_handler.h"
 #include "event_handler.h"

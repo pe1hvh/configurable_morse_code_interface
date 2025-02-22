@@ -4,9 +4,7 @@ Morse Code Interface for VBand
 Introduction
 ---------------
 
-This interface used the same hardware as the USB/HID Interface (The Gadget) and the cw_lcwo_pcw_interface. 
-In this folder are the cpp sources converted to ino files.
-
+This interface used the same hardware as the USB/HID Interface (The Gadget) and the cw_lcwo_pcw_interface. k
   
 Related Websites
 ---------------

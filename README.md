@@ -4,8 +4,10 @@ Morse Code Interface for VBand
 Introduction
 ---------------
 
-This interface used the same hardware as the USB/HID Interface (The Gadget) and the cw_lcwo_pcw_interface. k
-  
+This interface used the same hardware as the USB/HID Interface (The Gadget) and the cw_lcwo_pcw_interface. 
+In this folder are the cpp sources converted to ino files.
+
+
 Related Websites
 ---------------
 
@@ -36,6 +38,26 @@ For this project pin 6, 7  and ground is used, so building this project you can 
 - [morse-code-usbhid-interface-the-gadet](https://hackaday.io/project/184702-morse-code-usbhid-interface-the-gadet)
 - [cw_lcwo_pcw_interface](https://github.com/pe1hvh/cw_lcwo_pcw_interface)
 
+PlatformIO
+----------
+
+While using PlatformIO with Visual Code as IDE, I have to re-order the function.
+
+PlatformIO requires that functions be declared before they are called in the code. This is because PlatformIO uses a more standard C++ compilation process, which adheres strictly to the requirement that functions must be declared before use.
+
+SonarLint
+---------
+
+For writing cleancode, the Sonarlint plug-in is installed in Visual Code. SonarLint is an open-source code analysis tool that serves several important functions to help developers write cleaner, safer, and higher-quality code. There is no need, for using all sonarlint rules but the most important are enabled.
+
+ArduinoIDE
+----------
+This code is converted to compatible code for de ArduinoIDE and its placed in the folder arduino_ide as an Arduino project.
+
+ Add Seeeduino to your Arduino IDE
+        Click on File > Preference, and fill Additional Boards Manager URLs with the url below:
+        https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
+        and use your library managers to install the keyboard library.
 
 Notes and Warning
 -----------------

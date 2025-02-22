@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>XIAO SAMD21 WebUSB Besturing</title>
+    <script src="js/serial.js"></script>
+    <script src="js/application.js"></script>
+    <script src="js/pe1hvh.js"></script>
+    <link rel="stylesheet" href="css/application.css">
+    <link rel="stylesheet" href="css/pe1hvh.css">
+</head>
+<body>
+    <h1>XIAO SAMD21 WebUSB Configuration</h1>
+    <button id="connect" class="button black">Connect with XIAO</button>
+    <br><br>
+     <table style="border:0px;">
+
+     <tr><td>    
+     <label for="typeEvent">Type Event:</label>
+     </td><td>
+     <select id="typeEvent">
+          <option value="0">Mouse</option>
+          <option value="1">Keyboard</option>
+      </select>
+     </td></tr>
+
+      <tr><td>
+      <label for="typeMorseKey">Type Morse Key:</label>
+      </td><td>
+      <select id="typeMorseKey">
+          <option value="0">Straight Key</option>
+          <option value="1">Sidesweeper</option>
+          <option value="2">Paddle</option>
+      </select>
+      </td></tr>
+ 
+     <tr><td>    
+      <label for="leftEvent">Left Event:</label>
+      </td><td>
+      <select id="leftEvent">
+          <!-- Options will be dynamically populated based on typeEvent -->
+      </select>
+      </td></tr>
+
+     <tr><td>    
+      <label for="rightEvent">Right Event:</label>
+      </td><td>
+      <select id="rightEvent">
+          <!-- Options will be dynamically populated based on typeEvent -->
+      </select>
+      </td></tr>
+      </table>
+
+    <button id="send" class="button black">Send to XIAO</button>
+    <p id="status"></p>
+
+    <script>
+        let device;
+
+        document.getElementById('connect').addEventListener('click', async () => {
+            try {
+                device = await navigator.usb.requestDevice({
+                    filters: [{ vendorId: 0x2886 }] // Seeed Studio Vendor ID
+                });
+                await device.open();
+                await device.selectConfiguration(1);
+                await device.claimInterface(0);
+                document.getElementById('status').textContent = 'Connected with XIAO';
+            } catch (error) {
+                console.error('Error connection:', error);
+            }
+        });
+
+        document.getElementById('send').addEventListener('click', async () => {
+            if (!device) {
+                alert('First connect with XIAO');
+                return;
+            }
+
+            const typeEvent = parseInt(document.getElementById('typeEvent').value);
+            const typeMorseKey = parseInt(document.getElementById('typeMorseKey').value);
+            const leftEvent = parseInt(document.getElementById('leftEvent').value);
+            const rightEvent = parseInt(document.getElementById('rightEvent').value);
+
+            const data = new Uint8Array([typeEvent, typeMorseKey, leftEvent, rightEvent]);
+
+            try {
+                await device.transferOut(1, data);
+                document.getElementById('status').textContent = 'Send data';
+
+                // Ontvang bevestiging
+                const result = await device.transferIn(1, 64);
+                const decoder = new TextDecoder();
+                const response = decoder.decode(result.data);
+                document.getElementById('status').textContent = response;
+            } catch (error) {
+                console.error('Error sending:', error);
+            }
+        });
+    </script>
+</body>
+</html>
+

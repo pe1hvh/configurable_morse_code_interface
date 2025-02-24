@@ -13,7 +13,7 @@
   Simple program to generate a key keystroke or mouseclick with your favorite morse key and morse learning program
 
   After adding the interface to a computer USB port, the program wait for a initial key Event
-  The first Evented by the morse key
+
 
 
   Used hardware as describe at  https://hackaday.io/project/184702-morse-code-usbhid-interface-the-gadget

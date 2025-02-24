@@ -1,70 +1,109 @@
-const connection = SimpleWebSerial.setupSerialConnection({
+document.addEventListener('DOMContentLoaded', function() {
+
+    //--------------------------------------
+    //-- Intialise WebSerial              --
+    //--------------------------------------
+    
+    const connection = SimpleWebSerial.setupSerialConnection({
         requestAccessOnPageLoad: true,
- });
- 
- 
-document.getElementById('connect').addEventListener('click', async () => {
-    try {
-        await connection.connect();
-        console.log('Connected successfully');
-        connection.send('get_initial_values');
-    } catch (error) {
-        console.error('Connection failed:', error);
-    }
-});
-
-connection.on('initial_values', (data) => {
-    // Update UI with received data
-    document.getElementById('typeMorseKey').value = data.typeMorseKey;
-    document.getElementById('typeEvent').value = data.typeEvent;
-    updateEventOptions(data.typeEvent);
-    document.getElementById('leftEvent').value = data.leftEvent;
-    document.getElementById('rightEvent').value = data.rightEvent;
-});
-
-
-function sendConfiguration() {
-    const config = {
-        typeMorseKey: document.getElementById('typeMorseKey').value,
-        typeEvent: document.getElementById('typeEvent').value,
-        leftEvent: document.getElementById('leftEvent').value,
-        rightEvent: document.getElementById('rightEvent').value
-    };
-    connection.send('setConfiguration', config);
-}
-
-document.getElementById('typeEvent').addEventListener('change', (e) => {
-    updateEventOptions(e.target.value);
-});
-
-function updateEventOptions(eventType) {
-    const leftEvent = document.getElementById('leftEvent');
-    const rightEvent = document.getElementById('rightEvent');
-    const rightEventContainer = document.getElementById('rightEventContainer');
-    
-    leftEvent.innerHTML = '';
-    rightEvent.innerHTML = '';
-    
-    const options = eventType === '0' ? 
-        getMouseOptions(): getKeyboardOptions();
-    
-    options.forEach((option, index) => {
-        leftEvent.add(new Option(option, index));
-        rightEvent.add(new Option(option, index));
     });
-
-    // Toon of verberg het rightEvent op basis van de geselecteerde typeMorseKey
-    const typeMorseKey = document.getElementById('typeMorseKey').value;
-    rightEventContainer.style.display = typeMorseKey === '2' ? 'block' : 'none';
-}
+    
+    //----------------------------------------
+    //-- Load initial values from seeeduino --
+    //----------------------------------------
+    async function loadInitialData() {
+        try {
+            const initialValues = await connection.on("get_initial_values");
+            
+            document.getElementById('typeMorseKey').value = initialValues.typeMorseKey;
+            document.getElementById('typeEvent').value = initialValues.typeEvent;
+            updateEventOptions(); // Herstel de eventopties op basis van de typeEvent
+            document.getElementById('leftEvent').value = initialValues.leftEvent;
+            document.getElementById('rightEvent').value = initialValues.rightEvent;
+            document.getElementById('status').textContent = initialValues;
+        } catch (error) {
+            console.error("Error by load of data: ", error);
+        }
+    }
+    
+    //---------------------------------------
+    //-- Send updated values to seeeduino  --
+    //--------------------------------------- 
+    document.getElementById('send').addEventListener('click', async () => {
+        try {
+            const data = {
+                typeMorseKey: document.getElementById('typeMorseKey').value,
+                typeEvent: document.getElementById('typeEvent').value,
+                leftEvent: document.getElementById('leftEvent').value,
+                rightEvent: document.getElementById('rightEvent').value
+            };
+            
+            await connection.send("update_values", data);
+            document.getElementById('status').textContent = "Send data to Seeeduino!";
+        } catch (error) {
+            console.error("Error by sending data to Seeeduino: ", error);
+        }
+    });
+    
+    
+    // --------------------------------------
+    // -- Start HTML Inputhandler          --
+    // --------------------------------------
+    const typeMorseKeySelect = document.getElementById('typeMorseKey');
+    const typeEventSelect = document.getElementById('typeEvent');
+    const leftEventSelect = document.getElementById('leftEvent');
+    const rightEventSelect = document.getElementById('rightEvent');
+    const rightEventRow = document.getElementById('rightEventRow');
+    
+    
+    // --------------------------------------------
+    // -- Show right event only when key=paddle  --
+    // --------------------------------------------
+    function updateRightEventVisibility() {
+        if (typeMorseKeySelect.value === '2') {
+            rightEventRow.style.display = 'table-row';
+        } else {
+            rightEventRow.style.display = 'none';
+        }
+    }
+    
+    typeMorseKeySelect.addEventListener('change', updateRightEventVisibility);
+    
+    // ---------------------------------------------------------
+    // -- Update the Event option when changing the morse key --
+    // --------------------------------------------------------- 
+    function updateEventOptions() {
+        const selectedType = typeEventSelect.value;
+        const options = selectedType === '0' ? getMouseOptions() : getKeyboardOptions();
+    
+        [leftEventSelect, rightEventSelect].forEach(select => {
+            select.innerHTML = '';
+            options.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option.value;
+                optionElement.textContent = option.text;
+                select.appendChild(optionElement);
+            });
+        });
+    }
+    
+    typeEventSelect.addEventListener('change', updateEventOptions);
+    updateEventOptions(); // Initial population of options
+    
+    // -------------------------------------
+    // -- The event options for the Mouse --
+    // ------------------------------------- 
     function getMouseOptions() {
         return [
-            { value: '0', text: 'Left Click' },
-            { value: '1', text: 'Right Click' },
-            { value: '2', text: 'Middle Click' }
+            { value: '1', text: 'Left Click' },
+            { value: '2', text: 'Right Click' },
+            { value: '4', text: 'Middle Click' }
         ];
     }
-
+    
+    // ----------------------------------------
+    // -- The event options for the KeyBoard --
+    // ---------------------------------------- 
     function getKeyboardOptions() {
         return [
             { value: '0x80', text: 'Left Control Key' },
@@ -75,9 +114,7 @@ function updateEventOptions(eventType) {
             { value: '0x86', text: 'Right Alt Key' }
         ];
     }
-// Voeg een event listener toe voor typeMorseKey
-document.getElementById('typeMorseKey').addEventListener('change', () => {
-    updateEventOptions(document.getElementById('typeEvent').value);
-});
-
-
+    
+    
+    updateRightEventVisibility(); // Initial visibility check
+    });

@@ -13,17 +13,14 @@
 
     <title>XIAO SAMD21 WebUSB Configurator</title>
     <script lang="text/javascript" src="js/simple-web-serial.min.js"></script>
-    <!--script lang="text/javascript" src="js/pe1hvh.js"></script-->
-
-    <link rel="stylesheet" href="css/pe1hvh.css">
+     <link rel="stylesheet" href="css/pe1hvh.css">
 </head>
 <body>
     <h1>XIAO SAMD21 WebUSB Configuration</h1>
     <button id="connect" >Connect to Serial Port</button>
 
     <br><br>
-     <table style="border:0px;">
-     
+     <table><th><td><!--Name --></td><td><!--Value--></td></th>
      <tr><td>  
       <label for="typeMorseKey">Type Morse Key:</label>
       </td><td>
@@ -56,6 +53,7 @@
       </td>
       </tr>
 
+      <!-- Visibilty of the rightEventRow depends on typeMorseKey -->
       <tr id="rightEventRow" style="display: none;">
         <td>  
           <label for="rightEvent">Event 2 (=Pin 7):</label>
@@ -68,116 +66,11 @@
           </div>
         </td>
       </tr>
-
-      </table>
+   </table>
   <br>  <button id="send" class="button black">Send to XIAO</button>
   
 <p id="status"></p>
-<script type="text/javascript">
-document.addEventListener('DOMContentLoaded', function() {
-
-    <!-------------------------------------->
-    <!-- Start WebSerial                  -->
-    <!-------------------------------------->
-    
-    const connection = SimpleWebSerial.setupSerialConnection({
-        requestAccessOnPageLoad: true,
-    });
-    
- 
-    async function loadInitialData() {
-        try {
-            const initialValues = await connection.on("get_initial_values");
-            
-            // Stel de invoervelden in op de waarden die vanuit de Seeeduino zijn ontvangen
-            document.getElementById('typeMorseKey').value = initialValues.typeMorseKey;
-            document.getElementById('typeEvent').value = initialValues.typeEvent;
-            updateEventOptions(); // Herstel de eventopties op basis van de typeEvent
-            document.getElementById('leftEvent').value = initialValues.leftEvent;
-            document.getElementById('rightEvent').value = initialValues.rightEvent;
-            document.getElementById('status').textContent = initialValues;
-        } catch (error) {
-            console.error("Error by load of data: ", error);
-        }
-    }
-
- 
-    document.getElementById('send').addEventListener('click', async () => {
-        try {
-            const data = {
-                typeMorseKey: document.getElementById('typeMorseKey').value,
-                typeEvent: document.getElementById('typeEvent').value,
-                leftEvent: document.getElementById('leftEvent').value,
-                rightEvent: document.getElementById('rightEvent').value
-            };
-            
-            await connection.send("update_values", data);
-            document.getElementById('status').textContent = "Send data to Seeeduino!";
-        } catch (error) {
-            console.error("Error by sending data to Seeeduino: ", error);
-        }
-    });
- 
-    
-    <!-------------------------------------->
-    <!-- Start HTML Inputhandler          -->
-    <!-------------------------------------->
-    const typeMorseKeySelect = document.getElementById('typeMorseKey');
-    const typeEventSelect = document.getElementById('typeEvent');
-    const leftEventSelect = document.getElementById('leftEvent');
-    const rightEventSelect = document.getElementById('rightEvent');
-    const rightEventRow = document.getElementById('rightEventRow');
-
-    function updateRightEventVisibility() {
-        if (typeMorseKeySelect.value === '2') {
-            rightEventRow.style.display = 'table-row';
-        } else {
-            rightEventRow.style.display = 'none';
-        }
-    }
-
-    typeMorseKeySelect.addEventListener('change', updateRightEventVisibility);
-
-    function updateEventOptions() {
-        const selectedType = typeEventSelect.value;
-        const options = selectedType === '0' ? getMouseOptions() : getKeyboardOptions();
-
-        [leftEventSelect, rightEventSelect].forEach(select => {
-            select.innerHTML = '';
-            options.forEach(option => {
-                const optionElement = document.createElement('option');
-                optionElement.value = option.value;
-                optionElement.textContent = option.text;
-                select.appendChild(optionElement);
-            });
-        });
-    }
-
-
-
-    function getMouseOptions() {
-        return [
-            { value: '0', text: 'Left Click' },
-            { value: '1', text: 'Right Click' },
-            { value: '2', text: 'Middle Click' }
-        ];
-    }
-
-    function getKeyboardOptions() {
-        return [
-            { value: '0x80', text: 'Left Control Key' },
-            { value: '0x81', text: 'Left Shift Key' },
-            { value: '0x82', text: 'Left Alt Key' },
-            { value: '0x84', text: 'Right Control Key' },
-            { value: '0x85', text: 'Right Shift Key' },
-            { value: '0x86', text: 'Right Alt Key' }
-        ];
-    }
-    
-    updateEventOptions(); // Initial population of options
-    updateRightEventVisibility(); // Initial visibility check
-});
-
+<script lang="text/javascript" src="js/pe1hvh.js" >
 </script>
 </body>
 </html>

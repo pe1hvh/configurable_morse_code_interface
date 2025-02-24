@@ -34,8 +34,6 @@
 #include "eeprom_handler.h"
 
 
-
-
 /****************************************************/
 /* @brief setup
    1. set the pin mode

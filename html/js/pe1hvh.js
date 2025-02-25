@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // -- Show right event only when key=paddle  --
     // --------------------------------------------
     function updateRightEventVisibility() {
-        if (typeMorseKeySelect.value === '2') {
+        if (typeMorseKeySelect.value === '3') {
             rightEventRow.style.display = 'table-row';
         } else {
             rightEventRow.style.display = 'none';

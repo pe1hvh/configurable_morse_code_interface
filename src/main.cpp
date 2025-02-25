@@ -52,12 +52,9 @@ void setup() {
   NsConfigurator::myConfig.init();                           // read configutation values from permanent memory
   NsConfigurator::myTimer.init();                            // calculated first morse key press
 
-  if (NsConfigurator::myTimer.getKeyPressDuration() > 1000  || NsConfigurator::myConfig.getTypeEvent() > 2 ) {
+  if (NsConfigurator::myTimer.getKeyPressDuration() > 2000  || NsConfigurator::myConfig.getTypeMorseKey() > 3 || NsConfigurator::myConfig.getTypeMorseKey() < 1) {
                                                              // default (empty eeprom,reed is #FF) 
-    
-      NsConnection::setConnection();                         // set up the connection between interface and webpage
       NsConnection::maintainWebUSB();                        // Handles the communication between interface and webpage
-
       NsConfigurator::myConfig.writeConfig2Memory();         // Conditional write configuration to permanent memory
   }
 
@@ -69,9 +66,9 @@ void setup() {
   }
 
   NsEvent::myObjectHandler->initHandler(
-    NsConfigurator::myConfig.getTypeMorseKey(),
-    NsConfigurator::myConfig.getLeftEvent(),
-    NsConfigurator::myConfig.getRightEvent()
+        NsConfigurator::myConfig.getTypeMorseKey(),
+        NsConfigurator::myConfig.getLeftEvent(),
+        NsConfigurator::myConfig.getRightEvent()
   );
 
 }

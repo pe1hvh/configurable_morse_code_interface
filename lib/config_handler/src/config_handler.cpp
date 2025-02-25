@@ -3,8 +3,8 @@
 #include "global_vars.h"
 
 namespace NsConfigurator {
-    
-  
+
+ 
     /******************************************/
     /* @brief The initTimer                   */   
     /******************************************/

@@ -18,16 +18,18 @@ namespace NsConfigurator {
   };
   extern Timer myTimer;
   
+ 
+ 
   // Config class declaration
   class Config {
   private:
-      int typeMorseKey;
-      int typeEvent;
-      int leftEvent;
-      int rightEvent;
+      int typeMorseKey = 1; // Default Straight Key
+      int typeEvent    = 0; // Defualt Mouse
+      int leftEvent    = 1; // Default Right Klick
+      int rightEvent   = 2; // N/A with Straight Key 
       uint8_t buffer[64];
 
-     
+   
 
   
   public:

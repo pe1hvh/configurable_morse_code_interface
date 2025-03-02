@@ -9,7 +9,9 @@ namespace NsConnection {
     /******************************************/
     /* @brief  Send Initial Values to Webpage */
     /******************************************/
-    void sendInitialValues(JSONVar data) {
+    void sendInitialValues() {
+
+        JSONVar data;
         data["typeMorseKey"] = NsConfigurator::myConfig.getTypeMorseKey();
         data["typeEvent"]    = NsConfigurator::myConfig.getTypeEvent();
         data["leftEvent"]    = NsConfigurator::myConfig.getRightEvent();
@@ -35,14 +37,15 @@ namespace NsConnection {
     void maintainWebUSB() {
        
         Serial.begin(115200);
-        while (!Serial) {           // wait till connection
-            delay(1000);
+        while (!Serial) {           // until connection is made
+            delay(100);
         }
-        while (Serial) {
-            WebSerial.check();
-            delay(200);
-            WebSerial.on("get_initial_values", sendInitialValues);
-            WebSerial.on("update_values", updateValues);
+        sendInitialValues();
+        WebSerial.on("update_values", updateValues);
+
+        while (Serial) {   // untill connection is broken
+              WebSerial.check();
+              delay(2);
         }
     }
 }

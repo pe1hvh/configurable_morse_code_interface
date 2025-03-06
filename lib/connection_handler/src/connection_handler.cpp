@@ -1,4 +1,4 @@
-
+#include "global_vars.h"
 #include "connection_handler.h"
 
 namespace NsConnection {
@@ -10,13 +10,16 @@ namespace NsConnection {
     /* @brief  Send Initial Values to Webpage */
     /******************************************/
     void sendInitialValues() {
-
         JSONVar data;
+
         data["typeMorseKey"] = NsConfigurator::myConfig.getTypeMorseKey();
         data["typeEvent"]    = NsConfigurator::myConfig.getTypeEvent();
-        data["leftEvent"]    = NsConfigurator::myConfig.getRightEvent();
-        data["rightEvent"]   = NsConfigurator::myConfig.getLeftEvent();
-        WebSerial.send("get_initial_values", data);
+        data["leftEvent"]    = NsConfigurator::myConfig.getLeftEvent();
+        data["rightEvent"]   = NsConfigurator::myConfig.getRightEvent();
+
+
+
+
     }
 
     /******************************************/
@@ -24,9 +27,9 @@ namespace NsConnection {
     /******************************************/
     void updateValues(JSONVar data) {
         NsConfigurator::myConfig.setTypeMorseKey(data["typeMorseKey"]);
-        NsConfigurator::myConfig.setTypeMorseKey(data["typeEvent"]);
-        NsConfigurator::myConfig.setTypeMorseKey(data["leftEvent"]);
-        NsConfigurator::myConfig.setTypeMorseKey(data["rightEvent"]);
+        NsConfigurator::myConfig.setTypeEvent(data["typeEvent"]);
+        NsConfigurator::myConfig.setLeftEvent(data["leftEvent"]);
+        NsConfigurator::myConfig.setRightEvent(data["rightEvent"]);
 
     }
 
@@ -36,16 +39,24 @@ namespace NsConnection {
     /******************************************/
     void maintainWebUSB() {
        
-        Serial.begin(115200);
-        while (!Serial) {           // until connection is made
+        Serial.begin(57600);
+        while (!Serial) {              // until connection is made
             delay(100);
         }
-        sendInitialValues();
+     
+        delay(100);
+
         WebSerial.on("update_values", updateValues);
 
-        while (Serial) {   // untill connection is broken
+        while (Serial) {                 // untill keypressed
               WebSerial.check();
-              delay(2);
+              delay(10);
+              if (digitalRead(inPin6) == LOW || digitalRead(inPin7) == LOW) { // Key Pressed
+                delay(25);                                                    // simple method against bouncing
+                Serial.end();
+             }
         }
-    }
-}
+
+    } // end maintainWebUsb
+
+} // end namespace

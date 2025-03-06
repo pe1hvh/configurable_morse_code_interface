@@ -49,13 +49,12 @@ void setup() {
   pinMode(inPin6, INPUT_PULLUP);
   pinMode(inPin7, INPUT_PULLUP);
 
-  NsConfigurator::myConfig.init();                           // read configutation values from permanent memory
-  NsConfigurator::myTimer.init();                            // calculated first morse key press
+  NsConfigurator::myConfig.init();                               // read configutation values from permanent memory or set default values
+  NsConfigurator::myTimer.init();                                // calculated first morse key press
 
-  if (NsConfigurator::myTimer.getKeyPressDuration() > 2000  || NsConfigurator::myConfig.getTypeMorseKey() > 3 || NsConfigurator::myConfig.getTypeMorseKey() < 1) {
-                                                             // default (empty eeprom,reed is #FF) 
-      NsConnection::maintainWebUSB();                        // Handles the communication between interface and webpage
-      NsConfigurator::myConfig.writeConfig2Memory();         // Conditional write configuration to permanent memory
+  if (NsConfigurator::myTimer.getKeyPressDuration() > 2000 ) {   // default (empty eeprom,reed is #FF) 
+      NsConnection::maintainWebUSB();                            // Handles the communication between interface and webpage
+      NsConfigurator::myConfig.writeConfig2Memory();             // Conditional write configuration to permanent memory
   }
 
 

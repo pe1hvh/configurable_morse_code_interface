@@ -23,29 +23,27 @@ namespace NsConfigurator {
   // Config class declaration
   class Config {
   private:
-      int typeMorseKey = 1; // Default Straight Key
-      int typeEvent    = 0; // Defualt Mouse
-      int leftEvent    = 1; // Default Right Klick
-      int rightEvent   = 2; // N/A with Straight Key 
-      uint8_t buffer[64];
-
-   
-
-  
+      uint8_t typeMorseKey = 1; // Default Straight Key
+      uint8_t typeEvent    = 0; // Defualt Mouse
+      uint8_t leftEvent    = 1; // Default Right Klick
+      uint8_t rightEvent   = 2; // N/A with Straight Key 
+    
   public:
       void init();
       void writeConfig2Memory();
       void readConfigFromMemory();
-      int getTypeEvent();
-      int getLeftEvent();
-      int getRightEvent();
-      int getTypeMorseKey();
-      void setTypeEvent(int typeEvent);
-      void setLeftEvent(int leftEvent);
-      void setRightEvent(int rightEvent);
-      void setTypeMorseKey(int typeMorseKey);
+      uint8_t getTypeEvent();
+      uint8_t getLeftEvent();
+      uint8_t getRightEvent();
+      uint8_t getTypeMorseKey();
+      void setTypeEvent(uint8_t typeEvent);
+      void setLeftEvent(uint8_t leftEvent);
+      void setRightEvent(uint8_t rightEvent);
+      void setTypeMorseKey(uint8_t typeMorseKey);
   };
+
   extern Config myConfig;
+  
 }
 
 #endif // CONFIG_HANDLER_H

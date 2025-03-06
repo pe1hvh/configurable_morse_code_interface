@@ -14,7 +14,7 @@ namespace NsConfigurator {
             delay(25);                // simple method against bouncing
          }
          // Key Press, record the start time
-         keyPressStartTime = millis();
+         this->keyPressStartTime = millis();
           
          // Wait for the Key to be released
          while (digitalRead(inPin6) == LOW || digitalRead(inPin7) == LOW) {
@@ -23,14 +23,14 @@ namespace NsConfigurator {
          }
           
          // Key released, calculate the duration
-         keyPressDuration = (millis() - keyPressStartTime);  
+         this->keyPressDuration = (millis() - this->keyPressStartTime);  
     }
 
     /******************************************/
     /* @brief The getter for keyEventDuration */   
     /******************************************/
     unsigned long Timer::getKeyPressDuration(){
-         return keyPressDuration;
+         return this->keyPressDuration;
     }
           
     Timer myTimer;
@@ -40,13 +40,15 @@ namespace NsConfigurator {
     /*****************************************************/
     
     void Config::readConfigFromMemory() {
-        
-      this->typeMorseKey = readFlash(0); // 0 = straight key, 1 = cuty, 2=paddle
-      this->typeEvent    = readFlash(1); // 0 = mouse, 1 = keyboard
-      this->leftEvent    = readFlash(2); // left_key or left mouse click 
-      this->rightEvent   = readFlash(3); // right_key or right mouse click 
-     
-     }
+      if( readFlash(0) == 1 || readFlash(0) == 2 || readFlash(0) == 3  ) {
+    
+         this->typeMorseKey = readFlash(0); // 1 = straight key, 2 = cuty, 3=paddle
+         this->typeEvent    = readFlash(1); // 0 = mouse, 1 = keyboard
+         this->leftEvent    = readFlash(2); // left_key or left mouse click 
+         this->rightEvent   = readFlash(3); // right_key or right mouse click 
+      } // else default values
+   
+   }
   
 
  
@@ -76,38 +78,38 @@ namespace NsConfigurator {
     /******************************************/
     /* The Getters                            */
     /******************************************/     
-      int Config::getTypeEvent(){
+    uint8_t Config::getTypeEvent(){
         return this->typeEvent;
      } 
 
-     int Config::getLeftEvent(){
+     uint8_t Config::getLeftEvent(){
         return this->leftEvent;
      }
      
-     int Config::getRightEvent(){
+     uint8_t Config::getRightEvent(){
         return this->rightEvent;
      }  
 
-     int Config::getTypeMorseKey(){
+     uint8_t Config::getTypeMorseKey(){
         return this->typeMorseKey;
      } 
 
     /******************************************/
     /* The setters                            */
     /******************************************/     
-      void Config::setTypeEvent(int typeEvent){
-        this->typeEvent = typeEvent ;
+      void Config::setTypeEvent( uint8_t typeEvent){
+        this->typeEvent = typeEvent;
      } 
 
-     void Config::setLeftEvent( int leftEvent){
+     void Config::setLeftEvent( uint8_t leftEvent){
         this->leftEvent = leftEvent;
      }
      
-     void Config::setRightEvent( int rightEvent){
+     void Config::setRightEvent( uint8_t rightEvent){
        this->rightEvent = rightEvent;
      }  
 
-     void Config::setTypeMorseKey( int morseKey){
+     void Config::setTypeMorseKey( uint8_t morseKey){
        this->typeMorseKey = morseKey;
      } 
 

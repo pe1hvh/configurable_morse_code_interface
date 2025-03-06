@@ -11,8 +11,7 @@ namespace NsConnection {
     void sendInitialValues(JSONVar data);
     void updateValues(JSONVar data);
     void maintainWebUSB();
-    void getConfig();
-    void setConnection();
 
 }
+
 #endif

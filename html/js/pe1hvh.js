@@ -1,17 +1,8 @@
-document.addEventListener('DOMContentLoaded', function() {
 
-    //--------------------------------------
-    //-- Intialise WebSerial              --
-    //--------------------------------------
-    
-    const connection = SimpleWebSerial.setupSerialConnection({
-        requestAccessOnPageLoad: true,
-    });
-    
-    //----------------------------------------
-    //-- Load initial values from seeeduino --
-    //----------------------------------------
-    async function loadInitialData() {
+ //----------------------------------------
+ //-- Load initial values from seeeduino --
+ //----------------------------------------
+ async function loadInitialData() {
         try {
             const initialValues = await connection.on("get_initial_values");
             
@@ -20,11 +11,32 @@ document.addEventListener('DOMContentLoaded', function() {
             updateEventOptions(); // Herstel de eventopties op basis van de typeEvent
             document.getElementById('leftEvent').value = initialValues.leftEvent;
             document.getElementById('rightEvent').value = initialValues.rightEvent;
-            document.getElementById('status').textContent = initialValues;
+            document.getElementById('status').textContent = "Receive data from Seeeduino!".initialValues;
+            
         } catch (error) {
             console.error("Error by load of data: ", error);
         }
-    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    //--------------------------------------
+    //-- Intialise WebSerial              --
+    //--------------------------------------
+    //let initialDataLoaded = false;
+
+    const connection = SimpleWebSerial.setupSerialConnection({
+        requestAccessOnPageLoad: true,
+        //onConnect: async () => {
+        //    if (!initialDataLoaded) {
+        //        await loadInitialData();
+        //        initialDataLoaded = true;
+        //    }
+        //}    
+
+    });
+    
+
     
     //---------------------------------------
     //-- Send updated values to seeeduino  --
@@ -37,9 +49,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 leftEvent: document.getElementById('leftEvent').value,
                 rightEvent: document.getElementById('rightEvent').value
             };
-            
-            await connection.send("update_values", data);
-            document.getElementById('status').textContent = "Send data to Seeeduino!";
+            const jsonData = JSON.stringify(data);
+            await connection.send("update_values", jsonData);
+            document.getElementById('status').textContent = "Send data to Seeeduino!" + jsonData;
         } catch (error) {
             console.error("Error by sending data to Seeeduino: ", error);
         }
@@ -95,9 +107,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // ------------------------------------- 
     function getMouseOptions() {
         return [
-            { value: '1', text: 'Left Click' },
-            { value: '2', text: 'Right Click' },
-            { value: '4', text: 'Middle Click' }
+            { value: 1, text: 'Left Click' },
+            { value: 2, text: 'Right Click' },
+            { value: 4, text: 'Middle Click' }
         ];
     }
     
@@ -106,15 +118,19 @@ document.addEventListener('DOMContentLoaded', function() {
     // ---------------------------------------- 
     function getKeyboardOptions() {
         return [
-            { value: '0x80', text: 'Left Control Key' },
-            { value: '0x81', text: 'Left Shift Key' },
-            { value: '0x82', text: 'Left Alt Key' },
-            { value: '0x84', text: 'Right Control Key' },
-            { value: '0x85', text: 'Right Shift Key' },
-            { value: '0x86', text: 'Right Alt Key' }
+            { value: 0x80, text: 'Left Control Key' },
+            { value: 0x81, text: 'Left Shift Key' },
+            { value: 0x82, text: 'Left Alt Key' },
+            { value: 0x84, text: 'Right Control Key' },
+            { value: 0x85, text: 'Right Shift Key' },
+            { value: 0x86, text: 'Right Alt Key' }
         ];
     }
     
-    
     updateRightEventVisibility(); // Initial visibility check
-    });
+
+    connection.on("log", function(data) {
+        document.getElementById("log").innerText = data + '\n';
+    })
+
+});

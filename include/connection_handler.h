@@ -6,12 +6,12 @@
 #include <ArduinoJson.h>
 #include "config_handler.h"
 
-namespace NsConnection {
+//namespace NsConnection {
 
-    void sendInitialValues(JSONVar data);
+    void sendInitialValues();
     void updateValues(JSONVar data);
     void maintainWebUSB();
 
-}
+//}
 
 #endif

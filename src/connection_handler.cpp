@@ -1,7 +1,7 @@
 #include "global_vars.h"
 #include "connection_handler.h"
 
-namespace NsConnection {
+//namespace NsConnection {
   
     SimpleWebSerial WebSerial;
 
@@ -10,16 +10,20 @@ namespace NsConnection {
     /* @brief  Send Initial Values to Webpage */
     /******************************************/
     void sendInitialValues() {
-        JSONVar data;
+        int data[4];
+        char str[100];
 
-        data["typeMorseKey"] = NsConfigurator::myConfig.getTypeMorseKey();
-        data["typeEvent"]    = NsConfigurator::myConfig.getTypeEvent();
-        data["leftEvent"]    = NsConfigurator::myConfig.getLeftEvent();
-        data["rightEvent"]   = NsConfigurator::myConfig.getRightEvent();
-
-
-
-
+        data[0] =  NsConfigurator::myConfig.getTypeMorseKey();
+        data[1] =  NsConfigurator::myConfig.getTypeEvent();
+        data[2] =  NsConfigurator::myConfig.getLeftEvent();
+        data[3] =  NsConfigurator::myConfig.getRightEvent();
+      
+        if( data[0] == 1 || data[0] == 2 ||data[0] == 3 ) {
+            sprintf(str, "Geconfigureerd: Key %i , Event %i, RightEvent %i, LeftEvent %i ,", data[0], data[1], data[2], data[3]);
+            WebSerial.send("status", str );
+        } else {
+            WebSerial.send("status","niet geconfigureerd" );
+        }    
     }
 
     /******************************************/
@@ -46,6 +50,9 @@ namespace NsConnection {
      
         delay(100);
 
+        sendInitialValues();
+
+        delay(100);
         WebSerial.on("update_values", updateValues);
 
         while (Serial) {                 // untill keypressed
@@ -59,4 +66,4 @@ namespace NsConnection {
 
     } // end maintainWebUsb
 
-} // end namespace
+//} // end namespace

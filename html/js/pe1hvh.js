@@ -18,6 +18,7 @@
         }
 }
 
+
 document.addEventListener('DOMContentLoaded', function() {
 
     //--------------------------------------
@@ -36,7 +37,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     });
     
-
+    connection.on('status', value => {
+        const jsonData = JSON.stringify(value);
+        document.getElementById('status').textContent = jsonData;
+    });
     
     //---------------------------------------
     //-- Send updated values to seeeduino  --

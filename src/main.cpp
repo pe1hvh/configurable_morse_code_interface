@@ -31,8 +31,16 @@
 
 */
 #include "main.h"
-#include "eeprom_handler.h"
 
+void commitFlash(){
+  EEPROM.commit();
+}
+int readFlash(int index) {
+  return EEPROM.read(index);
+}
+void writeFlash(int index, int value) {
+  EEPROM.write(index, value);
+}
 
 /****************************************************/
 /* @brief setup
@@ -53,7 +61,7 @@ void setup() {
   NsConfigurator::myTimer.init();                                // calculated first morse key press
 
   if (NsConfigurator::myTimer.getKeyPressDuration() > 2000 ) {   // default (empty eeprom,reed is #FF) 
-      NsConnection::maintainWebUSB();                            // Handles the communication between interface and webpage
+      maintainWebUSB();                                          // Handles the communication between interface and webpage
       NsConfigurator::myConfig.writeConfig2Memory();             // Conditional write configuration to permanent memory
   }
 

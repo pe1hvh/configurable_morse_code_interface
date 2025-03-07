@@ -10,9 +10,8 @@
 
   Description
 
-  Simple program to generate a key keystroke or mouseclick with your favorite morse key and morse learning program
 
-  After adding the interface to a computer USB port, the program wait for a initial key Event
+  After adding the interface to a computer USB port, the program wait for a initial key Event.
 
 
 
@@ -31,16 +30,6 @@
 
 */
 #include "main.h"
-
-void commitFlash(){
-  EEPROM.commit();
-}
-int readFlash(int index) {
-  return EEPROM.read(index);
-}
-void writeFlash(int index, int value) {
-  EEPROM.write(index, value);
-}
 
 /****************************************************/
 /* @brief setup
@@ -61,7 +50,7 @@ void setup() {
   NsConfigurator::myTimer.init();                                // calculated first morse key press
 
   if (NsConfigurator::myTimer.getKeyPressDuration() > 2000 ) {   // default (empty eeprom,reed is #FF) 
-      maintainWebUSB();                                          // Handles the communication between interface and webpage
+      NsConnection::maintainWebUSB();                            // Handles the communication between interface and webpage
       NsConfigurator::myConfig.writeConfig2Memory();             // Conditional write configuration to permanent memory
   }
 

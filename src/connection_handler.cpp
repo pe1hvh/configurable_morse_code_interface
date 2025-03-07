@@ -30,11 +30,23 @@
     /* @brief  Update Values from Webpage     */
     /******************************************/
     void updateValues(JSONVar data) {
-        NsConfigurator::myConfig.setTypeMorseKey(data["typeMorseKey"]);
-        NsConfigurator::myConfig.setTypeEvent(data["typeEvent"]);
-        NsConfigurator::myConfig.setLeftEvent(data["leftEvent"]);
-        NsConfigurator::myConfig.setRightEvent(data["rightEvent"]);
+        const char* json = data;
+        JsonDocument doc;
+        deserializeJson(doc, json);
 
+        NsConfigurator::myConfig.setTypeMorseKey(doc["typeMorseKey"].as<uint8_t>());
+        NsConfigurator::myConfig.setTypeEvent(doc["typeEvent"].as<uint8_t>());
+        NsConfigurator::myConfig.setLeftEvent(doc["leftEvent"].as<uint8_t>());
+        NsConfigurator::myConfig.setRightEvent(doc["rightEvent"].as<uint8_t>());
+        delay(1000);
+        
+        char str[100];
+        sprintf(str, "Seeeduino heeft ontvangen: Key %i , Event %i, RightEvent %i, LeftEvent %i .", 
+                                                                NsConfigurator::myConfig.getTypeMorseKey(), 
+                                                                NsConfigurator::myConfig.getTypeEvent(), 
+                                                                NsConfigurator::myConfig.getRightEvent(), 
+                                                                NsConfigurator::myConfig.getLeftEvent());
+        WebSerial.send("status", str );
     }
 
 

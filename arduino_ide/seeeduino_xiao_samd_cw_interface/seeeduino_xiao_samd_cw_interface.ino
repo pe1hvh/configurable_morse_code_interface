@@ -1,11 +1,10 @@
 /******************************************************/
 /*
-       Title:   VBand Interface with a SeeeduinoXIAO.
+       Title:   Multipurpose Morse Interface with a SeeeduinoXIAO.
       Author:   JA van Hernen, www.pe1hvh.nl
         Date:   5 Jan 2025
      Version:   1.0
     Hardware:   Seeeduino XIAO samd
-         IDE:   Arduino IDE 1.8.19
        Legal:   Copyright (c) 2025  JA van Hernen.
                 Open Source under the terms of the MIT License.
 
@@ -14,7 +13,7 @@
   Simple program to generate a key keystroke or mouseclick with your favorite morse key and morse learning program
 
   After adding the interface to a computer USB port, the program wait for a initial key Event
-  The first Evented by the morse key
+
 
 
   Used hardware as describe at  https://hackaday.io/project/184702-morse-code-usbhid-interface-the-gadget
@@ -29,13 +28,10 @@
 
    When you use the Keyboard.print() command, the Arduino takes over your keyboard!
    Make sure you have control before you use the command.
-   VBand: https://hamradio.solutions/vband/
 
 */
 #include "main.h"
-#include "functions.h"
-
-
+#include "eeprom_handler.h"
 
 
 /****************************************************/
@@ -53,15 +49,12 @@ void setup() {
   pinMode(inPin6, INPUT_PULLUP);
   pinMode(inPin7, INPUT_PULLUP);
 
-  NsConfigurator::myConfig.initConfig();                      // read configutation values from permanent memory
-  NsConfigurator::myTimer.initTimer();                        // calculated first morse key press
+  NsConfigurator::myConfig.init();                               // read configutation values from permanent memory or set default values
+  NsConfigurator::myTimer.init();                                // calculated first morse key press
 
-  if (NsConfigurator::myTimer.getKeyPressDuration() > 1000  || NsConfigurator::myConfig.getTypeEvent() > 2 ) {
-    
-      NsConnection::setConnection();                          // set up the connection between interface and webpage
-      NsConnection::maintainWebUSB();                         // Handles the communication between interface and webpage
-
-      NsConfigurator::myConfig.writeConfig2Memory();          // Conditional write configuration to permanentmemory
+  if (NsConfigurator::myTimer.getKeyPressDuration() > 2000 ) {   // default (empty eeprom,reed is #FF) 
+      NsConnection::maintainWebUSB();                            // Handles the communication between interface and webpage
+      NsConfigurator::myConfig.writeConfig2Memory();             // Conditional write configuration to permanent memory
   }
 
 
@@ -72,9 +65,9 @@ void setup() {
   }
 
   NsEvent::myObjectHandler->initHandler(
-    NsConfigurator::myConfig.getTypeMorseKey(),
-    NsConfigurator::myConfig.getLeftEvent(),
-    NsConfigurator::myConfig.getRightEvent()
+        NsConfigurator::myConfig.getTypeMorseKey(),
+        NsConfigurator::myConfig.getLeftEvent(),
+        NsConfigurator::myConfig.getRightEvent()
   );
 
 }

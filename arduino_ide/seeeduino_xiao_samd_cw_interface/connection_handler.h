@@ -8,17 +8,10 @@
 
 namespace NsConnection {
 
-
-    extern int typeMorseKey;
-    extern int typeEvent;
-    extern int leftEvent;
-    extern int rightEvent;
-
     void sendInitialValues(JSONVar data);
     void updateValues(JSONVar data);
     void maintainWebUSB();
-    void getConfig();
-    void setConnection();
 
 }
+
 #endif

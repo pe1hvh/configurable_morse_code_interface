@@ -2,7 +2,7 @@
 #define CONFIG_HANDLER_H_
 
 #include <Arduino.h>
-#include "pin_handler.h"
+
 
 namespace NsConfigurator {
 
@@ -13,37 +13,37 @@ namespace NsConfigurator {
       unsigned long keyPressDuration;
 
   public:
-      void initTimer();
+      void init();
       unsigned long getKeyPressDuration();
   };
   extern Timer myTimer;
   
+ 
+ 
   // Config class declaration
   class Config {
   private:
-      int typeMorseKey;
-      int typeEvent;
-      int leftEvent;
-      int rightEvent;
-      uint8_t buffer[64];
-
-     
-
-  
+      uint8_t typeMorseKey = 1; // 1. straight key 2. swipper 3. paddle
+      uint8_t typeEvent    = 1; // Defualt Mouse
+      uint8_t leftEvent    = 128; // Default Right Klick
+      uint8_t rightEvent   = 128; // N/A with Straight Key 
+    
   public:
-      void initConfig();
+      void init();
       void writeConfig2Memory();
       void readConfigFromMemory();
-      int getTypeEvent();
-      int getLeftEvent();
-      int getRightEvent();
-      int getTypeMorseKey();
-      void setTypeEvent(int typeEvent);
-      void setLeftEvent(int leftEvent);
-      void setRightEvent(int rightEvent);
-      void setTypeMorseKey(int typeMorseKey);
+      uint8_t getTypeEvent();
+      uint8_t getLeftEvent();
+      uint8_t getRightEvent();
+      uint8_t getTypeMorseKey();
+      void setTypeEvent(uint8_t typeEvent);
+      void setLeftEvent(uint8_t leftEvent);
+      void setRightEvent(uint8_t rightEvent);
+      void setTypeMorseKey(uint8_t typeMorseKey);
   };
+
   extern Config myConfig;
+  
 }
 
 #endif // CONFIG_HANDLER_H

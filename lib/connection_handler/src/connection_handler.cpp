@@ -1,9 +1,10 @@
 #include "global_vars.h"
 #include "connection_handler.h"
 
+SimpleWebSerial WebSerial;
+
 namespace NsConnection {
-  
-    SimpleWebSerial WebSerial;
+
 
 
     /******************************************/

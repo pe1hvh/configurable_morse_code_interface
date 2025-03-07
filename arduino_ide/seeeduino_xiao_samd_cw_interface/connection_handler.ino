@@ -1,72 +1,62 @@
-
+#include "global_vars.h"
 #include "connection_handler.h"
 
 namespace NsConnection {
   
     SimpleWebSerial WebSerial;
-    int typeMorseKey = 0;
-    int typeEvent = 0;
-    int leftEvent = 1;
-    int rightEvent = 2;
+
 
     /******************************************/
     /* @brief  Send Initial Values to Webpage */
     /******************************************/
-    void sendInitialValues(JSONVar data) {
-        data["typeMorseKey"] = typeMorseKey;
-        data["typeEvent"] = typeEvent;
-        data["leftEvent"] = leftEvent;
-        data["rightEvent"] = rightEvent;
-        WebSerial.send("get_initial_values", data);
+    void sendInitialValues() {
+        JSONVar data;
+
+        data["typeMorseKey"] = NsConfigurator::myConfig.getTypeMorseKey();
+        data["typeEvent"]    = NsConfigurator::myConfig.getTypeEvent();
+        data["leftEvent"]    = NsConfigurator::myConfig.getLeftEvent();
+        data["rightEvent"]   = NsConfigurator::myConfig.getRightEvent();
+
+
+
+
     }
 
     /******************************************/
     /* @brief  Update Values from Webpage     */
     /******************************************/
     void updateValues(JSONVar data) {
-        typeMorseKey = data["typeMorseKey"];
-        typeEvent = data["typeEvent"];
-        leftEvent = data["leftEvent"];
-        rightEvent = data["rightEvent"];
+        NsConfigurator::myConfig.setTypeMorseKey(data["typeMorseKey"]);
+        NsConfigurator::myConfig.setTypeEvent(data["typeEvent"]);
+        NsConfigurator::myConfig.setLeftEvent(data["leftEvent"]);
+        NsConfigurator::myConfig.setRightEvent(data["rightEvent"]);
 
-        // You might want to add some error checking here to make sure the values are valid
-        NsConfigurator::myConfig.setTypeMorseKey(typeMorseKey);
-        NsConfigurator::myConfig.setTypeEvent(typeEvent);
-        NsConfigurator::myConfig.setLeftEvent(leftEvent);
-        NsConfigurator::myConfig.setRightEvent(rightEvent);
     }
 
-    /*****************************************************************/
-    /* @brief Handled the communication between interface and webpage */
-    /*****************************************************************/
+
+    /******************************************/
+    /* @brief Setting the connection          */
+    /******************************************/
     void maintainWebUSB() {
-        WebSerial.check();
-        delay(200);
-    }
-
-
-    /******************************************/
-    /* @brief Setting the connection          */
-    /******************************************/
-    void getConfig() {
-        if (NsConfigurator::myConfig.getTypeMorseKey() < 3) {
-            typeMorseKey = NsConfigurator::myConfig.getTypeMorseKey();
-            typeEvent = NsConfigurator::myConfig.getTypeEvent();
-            leftEvent = NsConfigurator::myConfig.getLeftEvent();
-            rightEvent = NsConfigurator::myConfig.getRightEvent();
+       
+        Serial.begin(57600);
+        while (!Serial) {              // until connection is made
+            delay(100);
         }
-    }
+     
+        delay(100);
 
-    /******************************************/
-    /* @brief Setting the connection          */
-    /******************************************/
-    void setConnection() {
-        getConfig();
-        Serial.begin(115200);
-        while (!Serial) {
-            delay(200);
-        }
-        WebSerial.on("get_initial_values", sendInitialValues);
         WebSerial.on("update_values", updateValues);
-    }
-}
+
+        while (Serial) {                 // untill keypressed
+              WebSerial.check();
+              delay(10);
+              if (digitalRead(inPin6) == LOW || digitalRead(inPin7) == LOW) { // Key Pressed
+                delay(25);                                                    // simple method against bouncing
+                Serial.end();
+             }
+        }
+
+    } // end maintainWebUsb
+
+} // end namespace

@@ -8,24 +8,25 @@ namespace NsEvent {
     /*****************************************************/
 
  
-    void MouseHandler::initHandler(int tMorseKey, int lEvent, int rEvent) {
+    void MouseHandler::initHandler(u_int8_t  typeMorseKey, u_int8_t  leftEvent, u_int8_t  rightEvent) {
 
-            typeMorseKey = tMorseKey;
-            leftEvent    = lEvent;
-            rightEvent   = rEvent;
+            this->typeMorseKey = typeMorseKey;
+            this->leftEvent    = leftEvent;
+            this->rightEvent   = rightEvent;
             
             Mouse.begin();
     }
 
     void MouseHandler::handleMorseKey(int pinDot ,int pinDash) {
     
-             if(pinDot == LOW)                      { //pin==LOW  => is closed (activated )
-                 Mouse.press(leftEvent);              // print a space on the monitor window    
-              }else if(pinDash == LOW)              { //pin==LOW  => is closed (activated )  
-                 Mouse.press(rightEvent);             // print a space on the monitor window    
-              }  else {                               //pin==HIGH => is open ( deactived )
+             if(pinDot == LOW)                      {         //pin==LOW  => is closed (activated )
+                 Mouse.press(this->leftEvent);              
+              }else if(pinDash == LOW)              {         //pin==LOW  => is closed (activated )  
+                 Mouse.press(this->rightEvent);     
+              }  else {                                       //pin==HIGH => is open ( deactived )
                  Mouse.release();
-              }  
+              } 
+               
      }
 
 
@@ -35,11 +36,11 @@ namespace NsEvent {
     /*****************************************************/
 
   
-    void KeyboardHandler::initHandler(int tMorseKey, int lEvent, int rEvent)  {
+    void KeyboardHandler::initHandler(u_int8_t  typeMorseKey, u_int8_t  leftEvent, u_int8_t  rightEvent)  {
 
-            typeMorseKey = tMorseKey;
-            leftEvent    = lEvent;
-            rightEvent   = rEvent;
+            this->typeMorseKey = typeMorseKey;
+            this->leftEvent    = leftEvent;
+            this->rightEvent   = rightEvent;
            
             Keyboard.begin();
     }
@@ -48,9 +49,9 @@ namespace NsEvent {
     void KeyboardHandler::handleMorseKey(int pinDot ,int pinDash) {
       
              if(pinDot == LOW)                      { //pin==LOW  => is closed (activated )
-                 Keyboard.press(leftEvent);           // print a space on the monitor window    
+                 Keyboard.press(this->leftEvent);    
               }else if(pinDash == LOW)              { //pin==LOW  => is closed (activated )  
-                 Keyboard.press(rightEvent);          // print a space on the monitor window    
+                 Keyboard.press(this->rightEvent);    
               }  else {                               //pin==HIGH => is open ( deactived )
                  Keyboard.releaseAll();
               }  

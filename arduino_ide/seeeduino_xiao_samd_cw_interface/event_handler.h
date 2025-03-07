@@ -11,12 +11,13 @@ namespace NsEvent {
     /*****************************************************/
     class BaseHandler {
       private:
-        int leftEvent;
-        int rightEvent;
-    
+        u_int8_t typeMorseKey;
+        u_int8_t leftEvent;
+        u_int8_t rightEvent;
+      
       public:
+        virtual void initHandler(u_int8_t  typeMorseKey, u_int8_t  leftEvent, u_int8_t  rightEvent) = 0;
         virtual void handleMorseKey(int pinDot, int pinDash) = 0;
-        virtual void initHandler(int typeMorseKey, int leftEvent, int rightEvent) = 0;
         virtual ~BaseHandler() = default;
     };
     
@@ -25,12 +26,12 @@ namespace NsEvent {
     /*****************************************************/
     class MouseHandler : public BaseHandler {
       private:
-        int typeMorseKey;
-        int leftEvent;
-        int rightEvent;
+        u_int8_t typeMorseKey;
+        u_int8_t leftEvent;
+        u_int8_t rightEvent;
     
       public:
-        void initHandler(int tMorseKey, int lEvent, int rEvent) override;
+        void initHandler(u_int8_t  typeMorseKey, u_int8_t  leftEvent, u_int8_t  rightEvent) override;
         void handleMorseKey(int pinDot, int pinDash) override;
     };
     
@@ -39,12 +40,12 @@ namespace NsEvent {
     /*****************************************************/
     class KeyboardHandler : public BaseHandler {
       private:
-        int typeMorseKey;
-        int leftEvent;
-        int rightEvent;
+        u_int8_t typeMorseKey;
+        u_int8_t leftEvent;
+        u_int8_t rightEvent;
     
       public:
-        void initHandler(int tMorseKey, int lEvent, int rEvent) override;
+        void initHandler(u_int8_t  typeMorseKey, u_int8_t  leftEvent, u_int8_t  rightEvent) override;
         void handleMorseKey(int pinDot, int pinDash) override;
     };
     

@@ -18,6 +18,7 @@
         }
 }
 
+
 document.addEventListener('DOMContentLoaded', function() {
 
     //--------------------------------------
@@ -36,19 +37,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     });
     
-
+    connection.on('status', value => {
+        const jsonData = JSON.stringify(value);
+        document.getElementById('status').textContent = jsonData;
+    });
     
     //---------------------------------------
     //-- Send updated values to seeeduino  --
     //--------------------------------------- 
     document.getElementById('send').addEventListener('click', async () => {
         try {
-            const data = {
-                typeMorseKey: document.getElementById('typeMorseKey').value,
-                typeEvent: document.getElementById('typeEvent').value,
-                leftEvent: document.getElementById('leftEvent').value,
-                rightEvent: document.getElementById('rightEvent').value
-            };
+            
+             const  typeMorseKey = document.getElementById('typeMorseKey').value;
+             const  typeEvent = document.getElementById('typeEvent').value;
+             const  leftEvent = document.getElementById('leftEvent').value;
+             const  rightEvent = document.getElementById('rightEvent').value;
+  
+            let data = {typeMorseKey,typeEvent,leftEvent,rightEvent}; 
             const jsonData = JSON.stringify(data);
             await connection.send("update_values", jsonData);
             document.getElementById('status').textContent = "Send data to Seeeduino!" + jsonData;

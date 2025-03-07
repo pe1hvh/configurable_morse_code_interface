@@ -10,9 +10,8 @@
 
   Description
 
-  Simple program to generate a key keystroke or mouseclick with your favorite morse key and morse learning program
 
-  After adding the interface to a computer USB port, the program wait for a initial key Event
+  After adding the interface to a computer USB port, the program wait for a initial key Event.
 
 
 
@@ -31,8 +30,6 @@
 
 */
 #include "main.h"
-#include "eeprom_handler.h"
-
 
 /****************************************************/
 /* @brief setup

@@ -6,7 +6,7 @@ projectDirTarget="../arduino_ide/$projectName"
 
 # Copy all .cpp (other than main.cpp) and .h files
 cp $projectDirSource/lib/**/src/* $projectDirTarget
-cp $projectDirSource/include/* $projectDirTarget
+#cp $projectDirSource/include/* $projectDirTarget
 
 # Rename .cpp to .ino
 for file in $projectDirTarget/*.cpp; do
@@ -23,3 +23,4 @@ done
 
 # Copy main.cpp to projectname.ino
 cp $projectDirSource/src/main.cpp $projectDirTarget/$projectName.ino
+cp $projectDirSource/include/main.h $projectDirTarget/$projectName.h

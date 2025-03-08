@@ -44,6 +44,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Set initial values for form elements
             document.getElementById('typeMorseKey').value = jsonObject[0];
             document.getElementById('typeEvent').value = jsonObject[1];
+            // If type of event changes values of leftEvent(pin6) or rightEvent(pin7) also changed
+            // therefore is the updateEventOptions.
             updateEventOptions();
             document.getElementById('leftEvent').value = jsonObject[2];
             document.getElementById('rightEvent').value = jsonObject[3];

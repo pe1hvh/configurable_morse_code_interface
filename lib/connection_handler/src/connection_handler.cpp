@@ -76,42 +76,7 @@ namespace NsConnection {
         }
     }
 
-    /******************************************/
-    /* 
-        @brief setSnprintf set the communication row
-               Dependig on the type of key the return message is slightly shorter.
-               Is the type of Morse Key 3 then the function use both right and left event. (it used both pins).
-               Otherwise it use only the left (pin6) event.
-        @param startText The start text can be saved configuration or seeeduino received
-        @param typeMorseKey The type of morse key
-        @param typeEvent  Mouse or keyboard
-        @param rightEvent depending of type event
-        @param leftEvent  depending of type event
-        @return str char  string concatenated for sending to the html page
-
-
-    */    
-    /******************************************/
-    const char* setSnprintf(uint8_t startText,uint8_t typeMorseKey, uint8_t typeEvent, uint8_t rightEvent, uint8_t leftEvent) {
-        static char str[150];
-        if(typeMorseKey==3) {
-                snprintf(str, sizeof(str), "%s; Type Key : %s, Type Event : %s, Event 1 (pin6) : %s, Event 2 (pin7): %s.",
-                                            getStartText(startText),
-                                            getNameMorseKey(typeMorseKey), 
-                                            getNameTypeEvent(typeEvent),
-                                            getNameEvent(rightEvent), 
-                                            getNameEvent(leftEvent));
-        } else {
-                snprintf(str, sizeof(str), "%s; Type Key : %s, Type Event : %s, Event 1 (pin6) : %s.",
-                                            getStartText(startText),
-                                            getNameMorseKey(typeMorseKey), 
-                                            getNameTypeEvent(typeEvent),
-                                            getNameEvent(rightEvent));
-       }  
-       return str;      
-    }
-    
-
+   
     /******************************************/
     /* @brief  Send Initial Values to Webpage */
     /******************************************/
@@ -127,8 +92,7 @@ namespace NsConnection {
         if( data[0] == 1 || data[0] == 2 ||data[0] == 3 ) {
             delay(100);
             // First sent the status to the html page   
-            strcpy(str,setSnprintf(1, data[0],data[1],data[2],data[3]));
-            WebSerial.send("status", str );
+            WebSerial.send("status", "Connected.");
             delay(500);
              // Next set de initial values for the html page
             JsonDocument doc;
@@ -140,7 +104,7 @@ namespace NsConnection {
             WebSerial.send("initial_values", str );
 
         } else {
-            WebSerial.send("status","niet geconfigureerd" );
+            WebSerial.send("status","N/A." );
         }    
     }
 
@@ -158,15 +122,8 @@ namespace NsConnection {
         NsConfigurator::myConfig.setTypeEvent(doc["typeEvent"].as<uint8_t>());          // set type of Event in object myConfig
         NsConfigurator::myConfig.setLeftEvent(doc["leftEvent"].as<uint8_t>());          // set left event in object myConfig
         NsConfigurator::myConfig.setRightEvent(doc["rightEvent"].as<uint8_t>());        // set right event in object myConfig
-        delay(1000);
-        
-        char str[150];
-        strcpy(str,setSnprintf(2, NsConfigurator::myConfig.getTypeMorseKey()
-                                , NsConfigurator::myConfig.getTypeEvent()
-                                , NsConfigurator::myConfig.getRightEvent()
-                                , NsConfigurator::myConfig.getLeftEvent()  ) );               
-    
-        WebSerial.send("status", str );
+        delay(500);
+        WebSerial.send("status", "Data Received." );
     }
 
 

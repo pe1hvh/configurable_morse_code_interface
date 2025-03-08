@@ -6,8 +6,6 @@ namespace NsEvent {
     /*****************************************************/
     /* @brief The Mouse Handler                          */
     /*****************************************************/
-
- 
     void MouseHandler::initHandler(u_int8_t  typeMorseKey, u_int8_t  leftEvent, u_int8_t  rightEvent) {
 
             this->typeMorseKey = typeMorseKey;
@@ -34,8 +32,6 @@ namespace NsEvent {
     /*****************************************************/
     /* @brief The Keyboard Handler                       */
     /*****************************************************/
-
-  
     void KeyboardHandler::initHandler(u_int8_t  typeMorseKey, u_int8_t  leftEvent, u_int8_t  rightEvent)  {
 
             this->typeMorseKey = typeMorseKey;

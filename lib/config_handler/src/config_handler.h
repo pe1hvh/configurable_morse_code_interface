@@ -23,9 +23,9 @@ namespace NsConfigurator {
   // Config class declaration
   class Config {
   private:
-      uint8_t typeMorseKey = 1; // 1. straight key 2. swipper 3. paddle
-      uint8_t typeEvent    = 1; // Defualt Mouse
-      uint8_t leftEvent    = 128; // Default Right Klick
+      uint8_t typeMorseKey = 1; // Default Straight Key => 1 = straight key, 2 =  swipper, 3 = paddle
+      uint8_t typeEvent    = 1; // Default Keyboard
+      uint8_t leftEvent    = 128; // Default Right Ctrl
       uint8_t rightEvent   = 128; // N/A with Straight Key 
     
   public:

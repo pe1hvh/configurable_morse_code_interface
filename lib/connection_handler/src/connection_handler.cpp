@@ -139,8 +139,6 @@ namespace NsConnection {
             serializeJson(doc, str);
             WebSerial.send("initial_values", str );
 
-
-
         } else {
             WebSerial.send("status","niet geconfigureerd" );
         }    

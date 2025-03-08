@@ -1,40 +1,47 @@
 
+/**
+ *      Author : JA van Hernen, PE1HVH
+ *        Date : 2025-03-10
+ *    Homepage : https://www.pe1hvh.nl/?cursus=morse-multiplatform-interface
+ *  Repository : https://github.com/pe1hvh/cw-multiplatform-interface
+ * Description : Multiplatform Morse Code Interface for LCWO, PCWFistCheck, VBand etc.
+ *
+ *  
+ * This script sets up event listeners and manages the UI for the Morse Code Interface.
+ * It communicates with a Seeeduino XIAO SAMD21 device via SimpleWebSerial for sending and receiving data.
+ * 
+ * It is the online configurator for the seeeduino cw-multiplatform-interface.
+ *
+ * The MIT license applies.
+ *  
+ */
 document.addEventListener('DOMContentLoaded', function() {
-
-
-    // --------------------------------------
-    // -- Start HTML Inputhandler          --
-    // --------------------------------------
+    // DOM element references
     const typeMorseKeySelect = document.getElementById('typeMorseKey');
     const typeEventSelect = document.getElementById('typeEvent');
     const leftEventSelect = document.getElementById('leftEvent');
     const rightEventSelect = document.getElementById('rightEvent');
     const rightEventRow = document.getElementById('rightEventRow');
+    
 
-
-    //--------------------------------------
-    //-- Intialise WebSerial              --
-    //--------------------------------------
-    //let initialDataLoaded = false;
-
+    /**
+     * Set up SimpleWebSerial connection
+     */
     const connection = SimpleWebSerial.setupSerialConnection({
         requestAccessOnPageLoad: true,
 
     });
 
-    //--------------------------------------------------------------------
-    //-- Received saved configuration or default values from seeeduino  --
-    //--------------------------------------------------------------------
-    connection.on("initial_values", initialValues => {
-   
-   
-        var jsonObject = JSON.parse(initialValues);
-   
-        console.log("Received initial values:", initialValues);  // Debugging
-        
 
+    /**
+     * Handle initial values received from the device
+     */
+    connection.on("initial_values", initialValues => {
+        var jsonObject = JSON.parse(initialValues);
+        console.log("Received initial values:", initialValues);  // Debugging
+ 
         if (typeMorseKey && typeEvent && leftEvent) {
-  
+            // Set initial values for form elements
             document.getElementById('typeMorseKey').value = jsonObject[0];
             document.getElementById('typeEvent').value = jsonObject[1];
             updateEventOptions();
@@ -45,19 +52,20 @@ document.addEventListener('DOMContentLoaded', function() {
              console.error("One or more elements not found when setting initial values");
         }
     });
- 
-    //-------------------------------------
-    //-- Received status from seeeduino  --
-    //-------------------------------------
+
+    
+    /**
+     * Handle status updates from the device
+     */
     connection.on('status', value => {
         const jsonData = JSON.stringify(value);
         document.getElementById('status').textContent = jsonData;
     });
-    
 
-    //---------------------------------------
-    //-- Send updated values to seeeduino  --
-    //--------------------------------------- 
+    
+    /**
+     * Send button click event handler
+     */
     document.getElementById('send').addEventListener('click', async () => {
         try {
             
@@ -76,10 +84,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     
-    
-    // --------------------------------------------
-    // -- Show right event only when key=paddle  --
-    // --------------------------------------------
+    /**
+     * Update visibility of right event based on Morse key type
+     */ 
     function updateRightEventVisibility() {
         if (typeMorseKeySelect.value === '3') {
             rightEventRow.style.display = 'table-row';
@@ -87,12 +94,20 @@ document.addEventListener('DOMContentLoaded', function() {
             rightEventRow.style.display = 'none';
         }
     }
+   
     
+    /**
+     * Adds an event listener to the 'typeMorseKeySelect' element.
+     * The listener triggers the 'updateRightEventVisibility' function whenever
+     * the 'change' event occurs. This ensures the visibility of the right event 
+     * is updated dynamically based on user interaction.
+     */
     typeMorseKeySelect.addEventListener('change', updateRightEventVisibility);
+   
     
-    // ---------------------------------------------------------
-    // -- Update the Event option when changing the morse key --
-    // --------------------------------------------------------- 
+    /**
+     * Update event options based on selected type (mouse or keyboard)
+     */
     function updateEventOptions() {
         const selectedType = typeEventSelect.value;
         const options = selectedType === '0' ? getMouseOptions() : getKeyboardOptions();
@@ -108,12 +123,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    /**
+     *  Add change event listener for event type
+     */
     typeEventSelect.addEventListener('change', updateEventOptions);
     updateEventOptions(); // Initial population of options
+
     
-    // -------------------------------------
-    // -- The event options for the Mouse --
-    // ------------------------------------- 
+    /**
+     * Get mouse event options
+     * @returns {Array} Array of mouse event options
+     */
     function getMouseOptions() {
         return [
             { value: 1, text: 'Left Click' },
@@ -122,9 +142,11 @@ document.addEventListener('DOMContentLoaded', function() {
         ];
     }
     
-    // ----------------------------------------
-    // -- The event options for the KeyBoard --
-    // ---------------------------------------- 
+
+    /**
+     * Get keyboard event options
+     * @returns {Array} Array of keyboard event options
+     */
     function getKeyboardOptions() {
         return [
             { value: 128, text: 'Left Control Key' },

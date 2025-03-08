@@ -1,25 +1,16 @@
 
- //----------------------------------------
- //-- Load initial values from seeeduino --
- //----------------------------------------
- async function loadInitialData() {
-        try {
-            const initialValues = await connection.on("get_initial_values");
-            
-            document.getElementById('typeMorseKey').value = initialValues.typeMorseKey;
-            document.getElementById('typeEvent').value = initialValues.typeEvent;
-            updateEventOptions(); // Herstel de eventopties op basis van de typeEvent
-            document.getElementById('leftEvent').value = initialValues.leftEvent;
-            document.getElementById('rightEvent').value = initialValues.rightEvent;
-            document.getElementById('status').textContent = "Receive data from Seeeduino!".initialValues;
-            
-        } catch (error) {
-            console.error("Error by load of data: ", error);
-        }
-}
-
-
 document.addEventListener('DOMContentLoaded', function() {
+
+
+    // --------------------------------------
+    // -- Start HTML Inputhandler          --
+    // --------------------------------------
+    const typeMorseKeySelect = document.getElementById('typeMorseKey');
+    const typeEventSelect = document.getElementById('typeEvent');
+    const leftEventSelect = document.getElementById('leftEvent');
+    const rightEventSelect = document.getElementById('rightEvent');
+    const rightEventRow = document.getElementById('rightEventRow');
+
 
     //--------------------------------------
     //-- Intialise WebSerial              --
@@ -28,20 +19,42 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const connection = SimpleWebSerial.setupSerialConnection({
         requestAccessOnPageLoad: true,
-        //onConnect: async () => {
-        //    if (!initialDataLoaded) {
-        //        await loadInitialData();
-        //        initialDataLoaded = true;
-        //    }
-        //}    
 
     });
-    
+
+    //--------------------------------------------------------------------
+    //-- Received saved configuration or default values from seeeduino  --
+    //--------------------------------------------------------------------
+    connection.on("initial_values", initialValues => {
+   
+   
+        var jsonObject = JSON.parse(initialValues);
+   
+        console.log("Received initial values:", initialValues);  // Debugging
+        
+
+        if (typeMorseKey && typeEvent && leftEvent) {
+  
+            document.getElementById('typeMorseKey').value = jsonObject[0];
+            document.getElementById('typeEvent').value = jsonObject[1];
+            updateEventOptions();
+            document.getElementById('leftEvent').value = jsonObject[2];
+            document.getElementById('rightEvent').value = jsonObject[3];
+          
+        } else {
+             console.error("One or more elements not found when setting initial values");
+        }
+    });
+ 
+    //-------------------------------------
+    //-- Received status from seeeduino  --
+    //-------------------------------------
     connection.on('status', value => {
         const jsonData = JSON.stringify(value);
         document.getElementById('status').textContent = jsonData;
     });
     
+
     //---------------------------------------
     //-- Send updated values to seeeduino  --
     //--------------------------------------- 
@@ -62,15 +75,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    
-    // --------------------------------------
-    // -- Start HTML Inputhandler          --
-    // --------------------------------------
-    const typeMorseKeySelect = document.getElementById('typeMorseKey');
-    const typeEventSelect = document.getElementById('typeEvent');
-    const leftEventSelect = document.getElementById('leftEvent');
-    const rightEventSelect = document.getElementById('rightEvent');
-    const rightEventRow = document.getElementById('rightEventRow');
     
     
     // --------------------------------------------
@@ -123,19 +127,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // ---------------------------------------- 
     function getKeyboardOptions() {
         return [
-            { value: 0x80, text: 'Left Control Key' },
-            { value: 0x81, text: 'Left Shift Key' },
-            { value: 0x82, text: 'Left Alt Key' },
-            { value: 0x84, text: 'Right Control Key' },
-            { value: 0x85, text: 'Right Shift Key' },
-            { value: 0x86, text: 'Right Alt Key' }
+            { value: 128, text: 'Left Control Key' },
+            { value: 129, text: 'Left Shift Key' },
+            { value: 130, text: 'Left Alt Key' },
+            { value: 132, text: 'Right Control Key' },
+            { value: 133, text: 'Right Shift Key' },
+            { value: 134, text: 'Right Alt Key' }
         ];
     }
     
     updateRightEventVisibility(); // Initial visibility check
 
-    connection.on("log", function(data) {
-        document.getElementById("log").innerText = data + '\n';
-    })
 
 });

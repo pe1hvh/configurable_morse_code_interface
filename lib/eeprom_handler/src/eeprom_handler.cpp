@@ -1,6 +1,7 @@
 #include "eeprom_handler.h"
 #include <FlashStorage_SAMD.h>
 
+  /**/
   void commitFlash(){
     EEPROM.commit();
   }

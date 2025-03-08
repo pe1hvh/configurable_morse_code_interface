@@ -12,6 +12,7 @@
 
 
   After adding the interface to a computer USB port, the program wait for a initial key Event.
+  One short keypress is works with the default settings.
 
 
 

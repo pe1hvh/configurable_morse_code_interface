@@ -78,12 +78,18 @@ namespace NsConnection {
 
     /******************************************/
     /* 
-        @brief set the communication row
-        @param startText The start text can be saved configuratio or seeeduino received
+        @brief setSnprintf set the communication row
+               Dependig on the type of key the return message is slightly shorter.
+               Is the type of Morse Key 3 then the function use both right and left event. (it used both pins).
+               Otherwise it use only the left (pin6) event.
+        @param startText The start text can be saved configuration or seeeduino received
         @param typeMorseKey The type of morse key
-        @param typeEvent Mouse or keyboard
+        @param typeEvent  Mouse or keyboard
         @param rightEvent depending of type event
         @param leftEvent  depending of type event
+        @return str char  string concatenated for sending to the html page
+
+
     */    
     /******************************************/
     const char* setSnprintf(uint8_t startText,uint8_t typeMorseKey, uint8_t typeEvent, uint8_t rightEvent, uint8_t leftEvent) {
@@ -119,8 +125,22 @@ namespace NsConnection {
         data[3] =  NsConfigurator::myConfig.getRightEvent();
       
         if( data[0] == 1 || data[0] == 2 ||data[0] == 3 ) {
+            delay(100);
+            // First sent the status to the html page   
             strcpy(str,setSnprintf(1, data[0],data[1],data[2],data[3]));
             WebSerial.send("status", str );
+            delay(500);
+             // Next set de initial values for the html page
+            JsonDocument doc;
+            JsonArray jsonArray = doc.to<JsonArray>();
+            for (int i = 0; i < 4; i++) {
+                jsonArray.add(data[i]);
+            }
+            serializeJson(doc, str);
+            WebSerial.send("initial_values", str );
+
+
+
         } else {
             WebSerial.send("status","niet geconfigureerd" );
         }    
@@ -136,10 +156,10 @@ namespace NsConnection {
         JsonDocument doc;
         deserializeJson(doc, json);
 
-        NsConfigurator::myConfig.setTypeMorseKey(doc["typeMorseKey"].as<uint8_t>());
-        NsConfigurator::myConfig.setTypeEvent(doc["typeEvent"].as<uint8_t>());
-        NsConfigurator::myConfig.setLeftEvent(doc["leftEvent"].as<uint8_t>());
-        NsConfigurator::myConfig.setRightEvent(doc["rightEvent"].as<uint8_t>());
+        NsConfigurator::myConfig.setTypeMorseKey(doc["typeMorseKey"].as<uint8_t>());    // set type of Morse Key in object myConfig
+        NsConfigurator::myConfig.setTypeEvent(doc["typeEvent"].as<uint8_t>());          // set type of Event in object myConfig
+        NsConfigurator::myConfig.setLeftEvent(doc["leftEvent"].as<uint8_t>());          // set left event in object myConfig
+        NsConfigurator::myConfig.setRightEvent(doc["rightEvent"].as<uint8_t>());        // set right event in object myConfig
         delay(1000);
         
         char str[150];
@@ -158,18 +178,16 @@ namespace NsConnection {
     void maintainWebUSB() {
        
         Serial.begin(57600);
-        while (!Serial) {              // until connection is made
-            delay(100);
+        while (!Serial) {                                                     // until connection is made
+            delay(100);                                                      
         }
      
         delay(100);
-
         sendInitialValues();
-
         delay(100);
-        WebSerial.on("update_values", updateValues);
 
-        while (Serial) {                 // untill keypressed
+        WebSerial.on("update_values", updateValues);
+        while (Serial) {                                                      // untill keypressed
               WebSerial.check();
               delay(10);
               if (digitalRead(inPin6) == LOW || digitalRead(inPin7) == LOW) { // Key Pressed

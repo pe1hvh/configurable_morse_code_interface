@@ -1,0 +1,30 @@
+.form-container {
+  max-width: 500px; /* Change this */
+  margin: 0 auto;
+}
+
+.form-row {
+  display: flex;
+  margin-bottom: 10px; /* filler */
+}
+
+.form-label {
+  flex: 0 0 150px; /* fix width for labels */
+  padding-right: 10px;
+}
+
+.form-input {
+  flex: 1; /* rest */
+}
+
+select {
+  width: 100%; /* select-element same width as container */
+}
+
+label, td {
+  font-family: Arial, sans-serif;
+  font-size:14px;
+  vertical-align: top;
+  text-align: left;
+  border:0px;
+}

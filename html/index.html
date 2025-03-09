@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"           content="width=device-width initial-scale=1">
+		<meta name="robots"             content= "index, follow">
+		<meta property="og:locale"      content="nl_NL" >
+		<meta property="og:type"        content="article" >
+		<meta property="og:title"       content="PE1HVH - XIAO SAMD21 WebUSB Configurator" >
+		<meta property="og:description" content="Configurator for Seeeduino Morse CW Interface. Set the interface for using it for by example PCWFistCechk, Learn Morse Online or Vband etc.">
+		<meta property="og:url"         content="https://www.pe1hvh.nl/" >
+		<meta property="og:site_name"   content="pe1hvh" >
+
+    <title>XIAO SAMD21 WebUSB Configurator</title>
+    <script lang="text/javascript" src="js/simple-web-serial.min.js"></script>
+     <link rel="stylesheet" href="css/pe1hvh.css">
+</head>
+<body>
+    <h1>XIAO SAMD21 WebUSB Configuration</h1>
+    <button id="connect" >Connect to Serial Port</button>
+    <div id="log"></div>
+    <br><br>
+     <table><th><td><!--Name --></td><td><!--Value--></td></th>
+     <tr><td>  
+      <label for="typeMorseKey">Type Morse Key:</label>
+      </td><td>
+      <select id="typeMorseKey">
+          <option value="1">Straight Key</option>
+          <option value="2">Sidesweeper</option>
+          <option value="3">Paddle</option>
+      </select>
+     </td>
+     
+     </tr>
+
+      <tr><td>
+      <label for="typeEvent">Type Event:</label>
+       </td><td>
+       <select id="typeEvent">
+          <option value="0">Mouse</option>
+          <option value="1">Keyboard</option>
+      </select>
+    
+      </td>
+      </tr>
+ 
+     <tr><td>    
+      <label for="leftEvent">Event 1 (=Pin 6):</label>
+      </td><td>
+      <select id="leftEvent">
+          <!-- Options will be dynamically populated based on typeEvent -->
+      </select>
+      </td>
+      </tr>
+
+      <!-- Visibilty of the rightEventRow depends on typeMorseKey -->
+      <tr id="rightEventRow" style="display: none;">
+        <td>  
+          <label for="rightEvent">Event 2 (=Pin 7):</label>
+        </td>
+        <td>
+          <div id="rightEventContainer">  
+            <select id="rightEvent">
+              <!-- Options will be dynamically populated based on typeEvent -->
+            </select>
+          </div>
+        </td>
+      </tr>
+   </table>
+  <br>  <button id="send" class="button black">Send to XIAO</button>
+  
+<p id="status"></p>
+<script lang="text/javascript" src="js/pe1hvh.js" >
+</script>
+</body>
+</html>

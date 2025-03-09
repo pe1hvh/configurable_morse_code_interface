@@ -18,7 +18,10 @@ namespace NsEvent {
       public:
         virtual void initHandler(u_int8_t  typeMorseKey, u_int8_t  leftEvent, u_int8_t  rightEvent) = 0;
         virtual void handleMorseKey(int pinDot, int pinDash) = 0;
-        virtual ~BaseHandler() = default;
+        // Although the program does not delete any objects, the virtual destructor
+        // virtual ~BaseHandler() = default;
+        // has been added for completeness and as a matter of good practice.
+        virtual ~BaseHandler() = default;                  
     };
     
     /*****************************************************/

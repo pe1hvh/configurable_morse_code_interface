@@ -1,10 +1,10 @@
-Multiplatform Morse Code Interface
-==================================
+Configurable Morse Code Interface
+=================================
 
 Introduction
 ---------------
 
-Multiplatform Morse Code Interface for LCWO, PCWFistCheck, VBand etc. In collaboration with the [Online Configurator](https://www.pe1hvh.nl/cw_online_configurator/) is it an interface for al programms or apps that using a mouse or keyboard.
+Configurable Morse Code Interface for LCWO, PCWFistCheck, VBand etc. In collaboration with the [Online Configurator](https://www.pe1hvh.nl/cw_online_configurator/) is it an interface for al programms or apps that using a mouse or keyboard.
 
  
 See for more information: [Home page project Multiplatform Morse Code Interface ](https://www.pe1hvh.nl/?cursus=morse-multiplatform-interface)

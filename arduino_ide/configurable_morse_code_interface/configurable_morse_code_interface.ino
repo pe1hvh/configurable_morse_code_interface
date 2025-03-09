@@ -25,7 +25,7 @@
   Make sure you have control before you use the command.
 
 */
-#include "main.h"
+#include "configurable_morse_code_interface.h"
 
 /****************************************************/
 /* @brief setup

@@ -27,7 +27,9 @@ namespace NsConfigurator {
     }
 
     /******************************************/
-    /* @brief The getter for keyEventDuration */   
+    /* @brief The getter for keyEventDuration 
+       @return keypress duration
+    */   
     /******************************************/
     unsigned long Timer::getKeyPressDuration(){
          return this->keyPressDuration;
@@ -38,7 +40,6 @@ namespace NsConfigurator {
     /*****************************************************/
     /* @brief The Configurator                           */
     /*****************************************************/
-    
     void Config::readConfigFromMemory() {
       if( readFlash(0) == 1 || readFlash(0) == 2 || readFlash(0) == 3  ) {
     
@@ -53,7 +54,9 @@ namespace NsConfigurator {
 
  
     /******************************************/
-    /* @brief The constructor                 */   
+    /* @brief init calls the private methode
+         readConfigFromMemory       
+     */   
     /******************************************/     
      void Config::init() {
          readConfigFromMemory();
@@ -61,7 +64,12 @@ namespace NsConfigurator {
      
 
      
- 
+    /*****************************************************/
+    /* @brief writeConfig2Memory  
+            Write the given values to permanent memory
+            and commit the changes                 
+    */
+    /*****************************************************/
     void Config::writeConfig2Memory() {
       
           bool changed = false; 

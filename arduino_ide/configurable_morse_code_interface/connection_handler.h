@@ -8,10 +8,9 @@
 
 namespace NsConnection {
 
-    void sendInitialValues(JSONVar data);
+    void sendInitialValues();
     void updateValues(JSONVar data);
     void maintainWebUSB();
-
 }
 
 #endif

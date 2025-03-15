@@ -4,7 +4,7 @@ Configurable USB/HID Morse Code Interface
 Introduction
 ---------------
 
-Configurable Morse Code Interface for LCWO, PCWFistCheck, VBand, etc. In collaboration with the [Online Configurator](https://www.pe1hvh.nl/cw_online_configurator/) , this interface allows you to use your favorite Morse key with various programs and apps, instead of relying on a mouse or keyboard.
+Configurable USB Morse Code Interface for LCWO, PCWFistCheck, VBand, etc. In collaboration with the [Online Configurator](https://www.pe1hvh.nl/cw_online_configurator/) , this interface allows you to use your favorite Morse key with various programs and apps, instead of relying on a mouse or keyboard.
 
 Please note that not all browsers support WebUSB. Refer to the Browser Support section in this Readme doc for more information.
 

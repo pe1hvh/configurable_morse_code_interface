@@ -1,5 +1,5 @@
-Configurable Morse Code Interface
-=================================
+Configurable USB/HID Morse Code Interface
+=========================================
 
 Introduction
 ---------------

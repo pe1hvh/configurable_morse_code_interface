@@ -42,7 +42,7 @@ The configuration will be stored in the interface's permanent memory.
 Hardware/STL File
 -----------------
 
-This project only needsa micro jack, some wire, a USB-C/USB cable, and of course a Seeeduino XIAO SAMD21.
+This project only needs a micro jack, some wire, a USB-C/USB cable, and of course a Seeeduino XIAO SAMD21.
 
 ![image](https://github.com/user-attachments/assets/cddb993a-dabf-4d2f-94d4-71d31f3f7a09)
 

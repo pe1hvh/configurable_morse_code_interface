@@ -78,9 +78,9 @@ To add Seeeduino XIAO to your Arduino IDE:
 3. Use your library manager to install the following libraries:
 - Keyboard
 - Mouse
-- Simple Web Serial
-- Arduino Json
-- FlashStorage SAMD
+- Simple Web Serial (confirm to install dependencies too, if asked)
+- Arduino_Json
+- FlashStorage_SAMD
 
 
 

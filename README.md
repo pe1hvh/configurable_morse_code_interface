@@ -126,4 +126,3 @@ Notes and Warning
 While the Morse code interface uses the Keyboard.print() or Keyboard.press() command, the Arduino board takes over your keyboard! Make sure you have control before you use the command.
 
 73 [PE1HVH ](https://www.pe1hvh.nl)
-

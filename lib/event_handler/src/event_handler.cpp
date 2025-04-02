@@ -30,7 +30,11 @@ namespace NsEvent {
     
              if(pinDot == LOW)                        {      //pin==LOW  => is closed (activated )
                  Mouse.press(this->leftEvent);              
-              }  else if(pinDash == LOW)              {      //pin==LOW  => is closed (activated )  
+              } else {
+                Mouse.release();
+              }  
+              
+              if(pinDash == LOW)                      {      //pin==LOW  => is closed (activated )  
                  Mouse.press(this->rightEvent);     
               }  else {                                      //pin==HIGH => is open ( deactived )
                  Mouse.release();
@@ -57,6 +61,7 @@ namespace NsEvent {
     }
 
 
+
     /*****************************************************/
     /* @brief KeyboardHandler Handles the key press           
        @param pinDot
@@ -65,14 +70,18 @@ namespace NsEvent {
     /*****************************************************/
     void KeyboardHandler::handleMorseKey(int pinDot ,int pinDash) {
       
-             if(pinDot == LOW)                       { //pin==LOW  => is closed (activated )
-                 Keyboard.press(this->leftEvent);     
-              }  else if(pinDash == LOW)             { //pin==LOW  => is closed (activated )  
-                 Keyboard.press(this->rightEvent);    
-              }  else {                                //pin==HIGH => is open ( deactived )
-                 Keyboard.releaseAll();
-              }  
-     }
+      if(pinDot == LOW) {                       //pin==LOW  => is closed (activated )
+          Keyboard.press(this->leftEvent);     
+       }  else {                                //pin==HIGH => is open ( deactivated )
+          Keyboard.release(this->leftEvent);
+       }
+       
+       if(pinDash == LOW) {                     //pin==LOW  => is closed (activated )  
+          Keyboard.press(this->rightEvent);    
+       }  else {                                //pin==HIGH => is open ( deactivated )
+          Keyboard.release(this->rightEvent);
+       }  
+}
     
 
 

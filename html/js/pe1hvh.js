@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // If type of event changes values of leftEvent(pin6) or rightEvent(pin7) also changed
             // therefore is the updateEventOptions.
             updateEventOptions();
+            updateRightEventVisibility();
             document.getElementById('leftEvent').value = jsonObject[2];
             document.getElementById('rightEvent').value = jsonObject[3];
           
@@ -156,7 +157,10 @@ document.addEventListener('DOMContentLoaded', function() {
             { value: 130, text: 'Left Alt Key' },
             { value: 132, text: 'Right Control Key' },
             { value: 133, text: 'Right Shift Key' },
-            { value: 134, text: 'Right Alt Key' }
+            { value: 134, text: 'Right Alt Key' },
+            { value: 32, text: 'Spacebar' },
+            { value: 91, text: '[' },
+            { value: 93, text: ']' },
         ];
     }
     

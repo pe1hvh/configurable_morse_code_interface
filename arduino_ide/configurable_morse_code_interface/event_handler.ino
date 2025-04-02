@@ -65,12 +65,16 @@ namespace NsEvent {
     /*****************************************************/
     void KeyboardHandler::handleMorseKey(int pinDot ,int pinDash) {
       
-             if(pinDot == LOW)                       { //pin==LOW  => is closed (activated )
+             if(pinDot == LOW) {                       //pin==LOW  => is closed (activated )
                  Keyboard.press(this->leftEvent);     
-              }  else if(pinDash == LOW)             { //pin==LOW  => is closed (activated )  
+              }  else {                                //pin==HIGH => is open ( deactivated )
+                 Keyboard.release(this->leftEvent);
+              }
+              
+              if(pinDash == LOW) {                     //pin==LOW  => is closed (activated )  
                  Keyboard.press(this->rightEvent);    
-              }  else {                                //pin==HIGH => is open ( deactived )
-                 Keyboard.releaseAll();
+              }  else {                                //pin==HIGH => is open ( deactivated )
+                 Keyboard.release(this->rightEvent);
               }  
      }
     

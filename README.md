@@ -88,13 +88,21 @@ Related Websites
 ---------------
 
 - [For STL files](https://hackaday.io/project/184702-morse-code-usbhid-interface-the-gadet)
-- [VBand](https://hamradio.solutions/vband/)
 - [Seeeduino](https://wiki.seeedstudio.com/Seeed_Arduino_Boards/)
+- [Home page project Multiplatform Morse Code Interface ](https://www.pe1hvh.nl/?cursus=configurable_morse_code_interface)
+- [Online CW Multiplatform Morse Code Interface Configurator](https://www.pe1hvh.nl/cw_online_configurator/)
+
+  
+Examples of software and webpages working with this interface
+------------------------------------------------------------
+
+- [VBand](https://hamradio.solutions/vband/)
 - [PCW FistCheck](https://www.qsl.net/dj7hs/download.htm)
 - [Learn Morse Code online(LCWO)](https://lcwo.net/)
-- [Online CW Multiplatform Morse Code Interface Configurator](https://www.pe1hvh.nl/cw_online_configurator/)
-- [Home page project Multiplatform Morse Code Interface ](https://www.pe1hvh.nl/?cursus=configurable_morse_code_interface)
 - [Morsecode.me](https://beta.morsecode.me/#/rooms/1)
+- [Morse Keyer V5.3](https://morse-rss-news.sourceforge.net/)
+- [MorsePower CWCom](https://morsepower.blogspot.com/2016/08/cwcom-program-to-communicate-using.html)
+- [F6DM Cw Player](http://f6dqm.free.fr/soft/cwplayer/en/cwplayer.htm)
 
 
 Browser support

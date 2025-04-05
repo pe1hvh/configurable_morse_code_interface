@@ -103,6 +103,7 @@ Examples of software and webpages working with this interface
 - [Morse Keyer V5.3](https://morse-rss-news.sourceforge.net/)
 - [MorsePower CWCom](https://morsepower.blogspot.com/2016/08/cwcom-program-to-communicate-using.html)
 - [F6DM Cw Player](http://f6dqm.free.fr/soft/cwplayer/en/cwplayer.htm)
+- [LKMT: CW - Morse Code Reading Trainer](https://dm2fue.darc.de/index.html#Download_Section) 
 
 
 Browser support

@@ -110,8 +110,8 @@ Browser support
 ---------------
 
 The Online Configurator will work with the following browsers:
-- Chrome: Fully supports WebUSB since version. It also supports Web Serial API.
-- Edge: Supports WebUSB since version.
+- Chrome: Fully supports WebUSB. It also supports Web Serial API.
+- Edge: Supports WebUSB.
 - Opera: Supports WebUSB.
 - Android browsers: Chrome for Android fully supports WebUSB.
 

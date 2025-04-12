@@ -161,6 +161,10 @@ document.addEventListener('DOMContentLoaded', function() {
             { value: 32, text: 'Spacebar' },
             { value: 91, text: '[' },
             { value: 93, text: ']' },
+            { value: 122, text: 'z' },
+            { value: 120, text: 'x' },
+            { value: 101, text: 'e' },
+            { value: 105, text: 'i' },
         ];
     }
     

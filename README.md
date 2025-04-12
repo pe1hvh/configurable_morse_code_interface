@@ -38,6 +38,18 @@ To stop the configuration process (don´t forget to send the new configuration t
 
 The configuration will be stored in the interface's permanent memory.
 
+Configuration Examples
+----------------------
+
+|                  | Straight Key/LeftPaddle | Right Paddle  | Emulation |
+|------------------|-------------------------|---------------|-----------|
+| vband            | [                       | ]             | Keyboard  |
+| Vail             | x                       | z             | Keyboard  |
+| morsecode.me     | e                       | I             | Keyboard  |
+| vband, vail      | Ctrl-L                  | Ctrl-R        | Keyboard  |
+| PCWFistCheck     | Left-Mouse              | Right-Mouse   | Mouse     |
+
+
 
 Hardware/STL File
 -----------------
@@ -100,6 +112,7 @@ Examples of software and webpages working with this interface
 - [PCW FistCheck](https://www.qsl.net/dj7hs/download.htm)
 - [Learn Morse Code online(LCWO)](https://lcwo.net/)
 - [Morsecode.me](https://beta.morsecode.me/#/rooms/1)
+- [Vail](https://vail.woozle.org/#)
 - [Morse Keyer V5.3](https://morse-rss-news.sourceforge.net/)
 - [MorsePower CWCom](https://morsepower.blogspot.com/2016/08/cwcom-program-to-communicate-using.html)
 - [F6DM Cw Player](http://f6dqm.free.fr/soft/cwplayer/en/cwplayer.htm)

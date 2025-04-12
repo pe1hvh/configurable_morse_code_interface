@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
             { value: 122, text: 'z' },
             { value: 120, text: 'x' },
             { value: 101, text: 'e' },
-            { value: 105, text: 'i' },
+            { value: 105, text: 'i' }
         ];
     }
     

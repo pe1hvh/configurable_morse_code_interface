@@ -41,13 +41,16 @@ void setup() {
   
   pinMode(inPin6, INPUT_PULLUP);
   pinMode(inPin7, INPUT_PULLUP);
+  pinMode(LED_BUILTIN, OUTPUT);
 
   NsConfigurator::myConfig.init();                               // Read configutation values from permanent memory or set default values
   NsConfigurator::myTimer.init();                                // Calculated first morse key press
 
   if (NsConfigurator::myTimer.getKeyPressDuration() > 2000 ) {   // set the configuration in collaboration with the Online Configurator
+      digitalWrite(LED_BUILTIN, LOW);                            // indicate the configuration state; LOW and HIGH are reversed in XIAO
       NsConnection::maintainWebUSB();                            // Handles the communication between interface and Online Configurator
       NsConfigurator::myConfig.writeConfig2Memory();             // Write conditional the configuration values to permanent memory
+      digitalWrite(LED_BUILTIN, HIGH);
   }
 
 
@@ -74,7 +77,7 @@ void setup() {
 */
 /****************************************************/
 void loop() {
-
+  
   NsEvent::myObjectHandler->handleMorseKey(digitalRead(inPin6), digitalRead(inPin7));
 
 }

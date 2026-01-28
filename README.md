@@ -14,7 +14,7 @@ How it works
 When the interface is connected to a USB port, the interface program waits for an initial key press (from the Morse key).
 
 - If this key press lasts less than 2 seconds, the interface program will proceed with either the default values or the configuration values specified using the online configurator.
-- If it lasts longer than 2 seconds, the program will wait for a connection with the Online Configurator.
+- If it lasts longer than 2 seconds, the program will wait for a connection with the Online Configurator. Amber light indicates that the device is in the configuration mode.
 
 The Online Configurator will prompt you to select the correct USB device/port (in this case, the Seeeduino XIAO).
 
@@ -36,7 +36,7 @@ To stop the configuration process (don´t forget to send the new configuration t
 - Press the Morse key briefly, or
 - Close the Online Configurator.
 
-The configuration will be stored in the interface's permanent memory.
+The configuration will be stored in the interface's permanent memory and the page will display status "Data received."
 
 Configuration Examples
 ----------------------

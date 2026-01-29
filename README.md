@@ -14,7 +14,7 @@ How it works
 When the interface is connected to a USB port, the interface program waits for an initial key press (from the Morse key).
 
 - If this key press lasts less than 2 seconds, the interface program will proceed with either the default values or the configuration values specified using the online configurator.
-- If it lasts longer than 2 seconds, the program will wait for a connection with the Online Configurator. Amber light indicates that the device is in the configuration mode. When you intend to configure the device, please make sure you connect the jack connectors first and then USB. Some jack sockets generate short key press when the plug is inserted and this way you miss the opportunity to connect the device with the Online Configurator.
+- If it lasts longer than 2 seconds, the program will wait for a connection with the Online Configurator. Amber light indicates that the device is in the configuration mode. When you intend to configure the device, connect the jack connectors before connecting USB. Some jack sockets generate short key press when the plug is inserted and this way you miss the opportunity to connect the device with the Online Configurator.
 
 The Online Configurator will prompt you to select the correct USB device/port (in this case, the Seeeduino XIAO).
 

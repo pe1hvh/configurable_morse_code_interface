@@ -14,7 +14,7 @@ How it works
 When the interface is connected to a USB port, the interface program waits for an initial key press (from the Morse key).
 
 - If this key press lasts less than 2 seconds, the interface program will proceed with either the default values or the configuration values specified using the online configurator.
-- If it lasts longer than 2 seconds, the program will wait for a connection with the Online Configurator.
+- If it lasts longer than 2 seconds, the program will wait for a connection with the Online Configurator. Amber light indicates that the device is in the configuration mode. When you intend to configure the device, connect the jack connectors before connecting USB. Some jack sockets generate short key press when the plug is inserted and this way you miss the opportunity to connect the device with the Online Configurator.
 
 The Online Configurator will prompt you to select the correct USB device/port (in this case, the Seeeduino XIAO).
 
@@ -36,7 +36,7 @@ To stop the configuration process (don´t forget to send the new configuration t
 - Press the Morse key briefly, or
 - Close the Online Configurator.
 
-The configuration will be stored in the interface's permanent memory.
+The configuration will be stored in the interface's permanent memory and the page will display status "Data received."
 
 Configuration Examples
 ----------------------
@@ -65,6 +65,34 @@ For this project, pins 6,7 and ground are used.
 The STL files for the 3D-printed Seeeduino case can be found on [morse-code-usbhid-interface-the-gadget](https://hackaday.io/project/184702-morse-code-usbhid-interface-the-gadget).
 
 ![image](https://github.com/user-attachments/assets/a50c0f38-e94b-45de-b255-eb27cef3a264)
+
+
+Flashing binary firmware
+------------------------
+
+Binary firmware files are available in Releases. There are two options for uploading code to XIAO SAMD21:
+
+1) Flashing firmware.bin with the BOSSA tool.
+2) Using UF2 Bootloader
+
+### Flashing with the BOSSA tool
+
+Flashing tool is avalable at https://shumatech.com/web/products/bossa
+
+Tested with command line bossac version 1.7.0 installed with PlatformIO
+```console
+bossac -e -w -v -b -R firmware.bin
+```
+Newer GUI versions are not tested.
+
+Reset to Bootloader (see below) is required when reflashing previously installed firmware and bossac fails, because upload port is unavailable.
+
+### Using UF2 Bootloader
+
+Reset XIAO to bootloader mode: https://wiki.seeedstudio.com/noport_upload_fails/#enter-bootloader-mode
+An USB drive named Arduino appears, upload file CURRENT.UF2 there. XIAO will restart and run the uploaded firmware.
+
+The file CURRENT.UF2 is configured in paddle mode, keyboard emulation, sending `[` and  `]` as events. (Tested with vband and vail.)
 
 
 Visual Code and PlatformIO
